@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🐝 Vicky Bee's English Adventure!</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Nunito','Arial Rounded MT Bold','Comic Sans MS',Arial,sans-serif;min-height:100vh;background:linear-gradient(135deg,#FFF9E6 0%,#FFF0CC 100%);color:#2D1B69;overflow-x:hidden}
+
+    /* ── SCREENS ── */
+    .screen{display:none;min-height:100vh;flex-direction:column;align-items:center;justify-content:center;padding:20px;position:relative;z-index:1}
+    .screen.active{display:flex}
+
+    /* ── HONEYCOMB BG ── */
+    body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(circle,#FFD70028 2px,transparent 2px);background-size:28px 28px;pointer-events:none;z-index:0}
+
+    /* ── START SCREEN ── */
+    #start-screen{background:linear-gradient(135deg,#5C2D91 0%,#9B6BD0 60%,#FFD700 200%);color:#fff;text-align:center}
+    .bee-float{font-size:110px;animation:float 3s ease-in-out infinite;display:block;margin-bottom:10px}
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
+    #start-screen h1{font-size:2.8rem;font-weight:900;text-shadow:3px 3px 0 rgba(0,0,0,.25);line-height:1.2;margin-bottom:8px}
+    #start-screen p{font-size:1.2rem;opacity:.9;margin-bottom:28px}
+    .info-row{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;margin-bottom:35px}
+    .info-card{background:rgba(255,255,255,.2);border-radius:18px;padding:14px 22px;text-align:center;backdrop-filter:blur(4px)}
+    .info-card .ic{font-size:1.8rem}
+    .info-card .il{font-size:.8rem;opacity:.8;margin:2px 0}
+    .info-card .iv{font-size:1.4rem;font-weight:900}
+    .btn-start{background:#FFD700;color:#2D1B69;border:none;padding:18px 55px;font-size:1.7rem;font-weight:900;border-radius:50px;cursor:pointer;font-family:inherit;box-shadow:0 7px 0 #C8960A;transition:.1s;user-select:none}
+    .btn-start:hover{transform:translateY(-3px);box-shadow:0 10px 0 #C8960A}
+    .btn-start:active{transform:translateY(4px);box-shadow:0 2px 0 #C8960A}
+
+    /* ── GAME SCREEN ── */
+    #game-screen{justify-content:flex-start;align-items:stretch;padding:10px 16px 20px}
+    .game-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;gap:8px;flex-wrap:wrap}
+    .score-pill{background:#5C2D91;color:#fff;padding:7px 18px;border-radius:30px;font-size:1.1rem;font-weight:700}
+    .bee-mid{font-size:1.8rem}
+    .timer-pill{background:#D32F2F;color:#fff;padding:7px 18px;border-radius:30px;font-size:1.1rem;font-weight:700;min-width:90px;text-align:center;transition:.3s}
+    .timer-pill.warn{background:#E65100;animation:tpulse 1s infinite}
+    .timer-pill.danger{background:#B71C1C;animation:tpulse .5s infinite}
+    @keyframes tpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+
+    .prog-bar-wrap{margin-bottom:12px}
+    .prog-labels{display:flex;justify-content:space-between;font-size:.82rem;color:#777;margin-bottom:4px}
+    .prog-bar{height:10px;background:#E0D0F0;border-radius:8px;overflow:hidden}
+    .prog-fill{height:100%;background:linear-gradient(90deg,#5C2D91,#FFD700);border-radius:8px;transition:width .5s ease}
+
+    /* ── QUESTION CARD ── */
+    .q-card{background:#fff;border-radius:22px;padding:22px;box-shadow:0 8px 32px rgba(92,45,145,.15);max-width:680px;width:100%;margin:0 auto;transition:opacity .2s,transform .2s}
+    .section-tag{display:inline-block;padding:4px 14px;border-radius:20px;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px}
+    .tag-phonics{background:#FF6B35;color:#fff}
+    .tag-grammar{background:#5C2D91;color:#fff}
+    .tag-reading{background:#1565C0;color:#fff}
+    .q-num{font-size:.82rem;color:#aaa;margin-bottom:4px}
+    .q-instr{font-size:1.3rem;font-weight:700;color:#2D1B69;margin-bottom:18px;line-height:1.4}
+
+    /* ── BUBBLE POP ── */
+    .bubbles-wrap{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;padding:10px 0 18px}
+    .bubble{width:96px;height:96px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.15rem;font-weight:700;cursor:pointer;border:3px solid #9B6BD0;background:linear-gradient(135deg,#EDE7F6,#D1B3FF);color:#4A0080;box-shadow:0 4px 14px rgba(155,107,208,.3);transition:.15s;user-select:none}
+    .bubble:hover{transform:scale(1.12)}
+    .bubble.sel{background:linear-gradient(135deg,#FFD700,#FFA000);border-color:#C8960A;color:#2D1B69;transform:scale(1.15);box-shadow:0 6px 18px rgba(200,150,10,.45)}
+    .bubble.ok{background:linear-gradient(135deg,#A5D6A7,#43A047);border-color:#2E7D32;color:#fff}
+    .bubble.no{background:linear-gradient(135deg,#FFCDD2,#E57373);border-color:#C62828;color:#fff}
+
+    /* ── ODD ONE OUT ── */
+    .word-cards{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;padding:10px 0}
+    .wcard{background:linear-gradient(135deg,#E3F2FD,#BBDEFB);border:3px solid #1565C0;border-radius:18px;padding:18px 28px;font-size:1.45rem;font-weight:700;cursor:pointer;color:#0D47A1;box-shadow:0 4px 10px rgba(21,101,192,.18);transition:.15s;user-select:none;text-align:center}
+    .wcard:hover{transform:translateY(-5px);box-shadow:0 8px 18px rgba(21,101,192,.28)}
+    .wcard.ok{background:linear-gradient(135deg,#C8E6C9,#66BB6A);border-color:#2E7D32;color:#fff}
+    .wcard.no{background:linear-gradient(135deg,#FFCDD2,#E57373);border-color:#C62828;color:#fff}
+
+    /* ── LETTER CHOICE ── */
+    .letter-display{text-align:center;margin:14px 0}
+    .letter-display .lem{font-size:64px}
+    .letter-display .letxt{font-size:2.4rem;font-weight:900;letter-spacing:4px;color:#2D1B69}
+    .letter-btns{display:flex;gap:18px;justify-content:center;margin-top:16px}
+    .lbtn{width:96px;height:96px;border-radius:22px;font-size:2.8rem;font-weight:900;cursor:pointer;font-family:inherit;transition:.15s;user-select:none;border:4px solid}
+    .lbtn.b{background:#FFF3E0;border-color:#FF6B35;color:#BF360C}
+    .lbtn.f{background:#E8F5E9;border-color:#388E3C;color:#1B5E20}
+    .lbtn.v{background:#EDE7F6;border-color:#6A1B9A;color:#4A148C}
+    .lbtn:hover{transform:translateY(-4px) scale(1.08)}
+    .lbtn.ok{background:#A5D6A7;border-color:#2E7D32;color:#fff}
+    .lbtn.no{background:#EF9A9A;border-color:#C62828;color:#fff}
+
+    /* ── WORD SORT ── */
+    .sort-words-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:16px}
+    .sw{background:#fff;border:3px solid #9B6BD0;border-radius:14px;padding:10px 18px;font-size:1.15rem;font-weight:700;cursor:pointer;color:#4A0080;transition:.15s;user-select:none}
+    .sw:hover{background:#F3E5FF;transform:scale(1.06)}
+    .sw.sel{background:#FFD700;border-color:#C8960A;color:#2D1B69}
+    .sw.placed{opacity:.35;cursor:default;pointer-events:none}
+    .buckets-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+    .bucket{border-radius:18px;padding:12px;min-width:118px;min-height:130px;border:3px dashed;cursor:pointer;transition:.15s;text-align:center}
+    .bucket:hover{transform:scale(1.03)}
+    .bucket.b-bkt{background:#FFF3E0;border-color:#FF6B35}
+    .bucket.f-bkt{background:#E8F5E9;border-color:#388E3C}
+    .bucket.v-bkt{background:#EDE7F6;border-color:#6A1B9A}
+    .bkt-lbl{font-size:1.8rem;font-weight:900;margin-bottom:8px}
+    .b-bkt .bkt-lbl{color:#BF360C}
+    .f-bkt .bkt-lbl{color:#1B5E20}
+    .v-bkt .bkt-lbl{color:#4A148C}
+    .bkt-words{display:flex;flex-wrap:wrap;gap:4px;justify-content:center}
+    .bkt-word{background:rgba(255,255,255,.75);border-radius:8px;padding:3px 9px;font-size:.85rem;font-weight:700}
+
+    /* ── MULTIPLE CHOICE ── */
+    .mc-q{background:#F3E5FF;border-radius:14px;padding:14px;font-size:1.2rem;font-weight:700;text-align:center;color:#2D1B69;margin-bottom:14px}
+    .mc-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .mcbtn{background:#fff;border:3px solid #9B6BD0;border-radius:18px;padding:18px 12px;font-size:1.3rem;font-weight:700;cursor:pointer;font-family:inherit;color:#4A0080;box-shadow:0 4px 10px rgba(155,107,208,.15);transition:.15s}
+    .mcbtn:hover{background:#F3E5FF;transform:translateY(-3px)}
+    .mcbtn.ok{background:#A5D6A7;border-color:#2E7D32;color:#fff}
+    .mcbtn.no{background:#EF9A9A;border-color:#C62828;color:#fff}
+
+    /* ── SENTENCE COMPLETE / WORD BANK ── */
+    .sent-display{font-size:1.35rem;font-weight:700;text-align:center;color:#2D1B69;margin:16px 0;line-height:2.2}
+    .blank{display:inline-block;min-width:110px;border-bottom:4px solid #5C2D91;color:#5C2D91;font-weight:900;margin:0 6px;text-align:center;padding:0 4px}
+    .bank-row{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;padding:10px 0}
+    .bword{background:linear-gradient(135deg,#E3F2FD,#BBDEFB);border:3px solid #1565C0;border-radius:14px;padding:12px 22px;font-size:1.25rem;font-weight:700;cursor:pointer;color:#0D47A1;transition:.15s;user-select:none}
+    .bword:hover{transform:scale(1.06);background:#BBDEFB}
+    .bword.ok{background:#A5D6A7;border-color:#2E7D32;color:#fff}
+    .bword.no{background:#EF9A9A;border-color:#C62828;color:#fff}
+
+    /* ── TRUE / FALSE ── */
+    .stmt-box{background:linear-gradient(135deg,#F3E5FF,#E8D5FF);border:3px solid #9B6BD0;border-radius:18px;padding:22px;font-size:1.4rem;font-weight:700;text-align:center;color:#2D1B69;margin:14px 0;line-height:1.5}
+    .tf-row{display:flex;gap:18px;justify-content:center;margin-top:16px}
+    .tfbtn{flex:1;max-width:190px;padding:22px 10px;border:none;border-radius:22px;font-size:1.4rem;font-weight:900;cursor:pointer;font-family:inherit;transition:.1s}
+    .tfbtn.t{background:#43A047;color:#fff;box-shadow:0 6px 0 #2E7D32}
+    .tfbtn.f{background:#E53935;color:#fff;box-shadow:0 6px 0 #B71C1C}
+    .tfbtn:hover{transform:translateY(-3px)}
+    .tfbtn:active{transform:translateY(3px)}
+    .tfbtn.ok{background:#A5D6A7!important;box-shadow:0 4px 0 #2E7D32;color:#1B5E20!important}
+    .tfbtn.no{background:#EF9A9A!important;box-shadow:0 4px 0 #B71C1C;color:#B71C1C!important}
+
+    /* ── ORACY / EMOJI PICK ── */
+    .oracy-stmt{font-size:1.25rem;font-weight:700;text-align:center;color:#2D1B69;margin:14px 0;padding:14px;background:#FFF8E1;border-radius:14px;border:2px solid #FFD700}
+    .emoji-pick-row{display:flex;gap:20px;justify-content:center;margin-top:10px}
+    .epick{font-size:3.5rem;cursor:pointer;border:4px solid transparent;border-radius:20px;padding:10px;transition:.15s;background:#fff;box-shadow:0 3px 10px rgba(0,0,0,.12)}
+    .epick:hover{transform:scale(1.15);border-color:#FFD700}
+    .epick.ok{border-color:#2E7D32;background:#C8E6C9}
+    .epick.no{border-color:#C62828;background:#FFCDD2}
+
+    /* ── CHECK BUTTON ── */
+    .btn-check{background:#5C2D91;color:#fff;border:none;padding:13px 36px;font-size:1.1rem;font-weight:700;border-radius:28px;cursor:pointer;font-family:inherit;margin:18px auto 0;display:block;box-shadow:0 5px 0 #3A0075;transition:.1s}
+    .btn-check:hover{transform:translateY(-2px)}
+    .btn-check:active{transform:translateY(3px);box-shadow:0 2px 0 #3A0075}
+    .btn-check:disabled{opacity:.5;cursor:default}
+
+    /* ── FEEDBACK OVERLAY ── */
+    #feedback{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:200;pointer-events:none;opacity:0;transition:opacity .3s}
+    #feedback.show{opacity:1}
+    .fb-emoji{font-size:90px;animation:bncIn .45s ease}
+    .fb-msg{font-size:1.6rem;font-weight:900;margin-top:12px;padding:14px 28px;border-radius:18px;text-align:center;max-width:320px;animation:bncIn .45s ease .08s both}
+    .fb-correct .fb-msg{background:#43A047;color:#fff}
+    .fb-wrong .fb-msg{background:#E53935;color:#fff}
+    .fb-msg small{display:block;font-size:.7em;margin-top:6px;opacity:.92;font-weight:700}
+    @keyframes bncIn{0%{transform:scale(0);opacity:0}70%{transform:scale(1.2)}100%{transform:scale(1);opacity:1}}
+
+    /* ── CONFETTI ── */
+    .cf{position:fixed;top:-18px;animation:cfFall linear forwards;z-index:199;border-radius:2px;pointer-events:none}
+    @keyframes cfFall{0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(110vh) rotate(720deg);opacity:0}}
+
+    /* ── SHAKE ── */
+    @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-12px)}40%{transform:translateX(12px)}60%{transform:translateX(-8px)}80%{transform:translateX(8px)}}
+    .shake{animation:shake .45s ease}
+
+    /* ── RESULT SCREEN ── */
+    #result-screen{background:linear-gradient(135deg,#5C2D91 0%,#9B6BD0 100%);color:#fff;text-align:center;gap:12px}
+    .r-bee{font-size:80px;animation:float 3s ease-in-out infinite}
+    .r-circle{width:190px;height:190px;border-radius:50%;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 0 0 10px rgba(255,255,255,.3)}
+    .r-num{font-size:3.8rem;font-weight:900;color:#5C2D91;line-height:1}
+    .r-of{font-size:.95rem;color:#9B6BD0;font-weight:700}
+    .r-stars{font-size:2.4rem;letter-spacing:4px}
+    .r-title{font-size:2.2rem;font-weight:900}
+    .r-msg{font-size:1.1rem;opacity:.92;max-width:380px;line-height:1.5}
+    .btn-restart{background:#FFD700;color:#2D1B69;border:none;padding:16px 48px;font-size:1.4rem;font-weight:900;border-radius:50px;cursor:pointer;font-family:inherit;box-shadow:0 6px 0 #C8960A;transition:.1s}
+    .btn-restart:hover{transform:translateY(-3px)}
+    .btn-restart:active{transform:translateY(3px)}
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:480px){
+      #start-screen h1{font-size:2rem}
+      .q-instr{font-size:1.05rem}
+      .mc-grid{grid-template-columns:1fr}
+      .bubble{width:78px;height:78px;font-size:.95rem}
+      .lbtn{width:78px;height:78px;font-size:2.2rem}
+      .wcard{padding:14px 18px;font-size:1.2rem}
+      .stmt-box{font-size:1.15rem}
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════ START SCREEN ══════════ -->
+<div id="start-screen" class="screen active">
+  <span class="bee-float">🐝</span>
+  <h1>Vicky Bee's<br>English Adventure!</h1>
+  <p>Join Vicky Bee on a mission to master English!</p>
+  <div class="info-row">
+    <div class="info-card"><div class="ic">⭐</div><div class="il">Score</div><div class="iv">20 Stars</div></div>
+    <div class="info-card"><div class="ic">⏱️</div><div class="il">Time</div><div class="iv">30 Min</div></div>
+    <div class="info-card"><div class="ic">🎮</div><div class="il">Games</div><div class="iv">20 Levels</div></div>
+  </div>
+  <button class="btn-start" onclick="startGame()">🚀 Let's Go!</button>
+</div>
+
+<!-- ══════════ GAME SCREEN ══════════ -->
+<div id="game-screen" class="screen">
+  <div class="game-header">
+    <div class="score-pill">⭐ <span id="scoreVal">0</span> / 20</div>
+    <div class="bee-mid">🐝</div>
+    <div class="timer-pill" id="timerEl">30:00</div>
+  </div>
+  <div class="prog-bar-wrap">
+    <div class="prog-labels"><span id="progLabel">Question 1 of 20</span><span id="sectionLabel">Phonics</span></div>
+    <div class="prog-bar"><div class="prog-fill" id="progFill" style="width:5%"></div></div>
+  </div>
+  <div class="q-card" id="qCard"></div>
+</div>
+
+<!-- ══════════ RESULT SCREEN ══════════ -->
+<div id="result-screen" class="screen">
+  <div class="r-bee">🐝</div>
+  <div class="r-stars" id="rStars">⭐⭐⭐⭐⭐</div>
+  <div class="r-circle">
+    <div class="r-num" id="rNum">0</div>
+    <div class="r-of">out of 20</div>
+  </div>
+  <div class="r-title" id="rTitle">Amazing!</div>
+  <div class="r-msg" id="rMsg">Vicky Bee is proud of you!</div>
+  <button class="btn-restart" onclick="restartGame()">🔄 Play Again!</button>
+</div>
+
+<!-- ══════════ FEEDBACK OVERLAY ══════════ -->
+<div id="feedback">
+  <div class="fb-emoji" id="fbEmoji"></div>
+  <div class="fb-msg" id="fbMsg"></div>
+</div>
+
+<script>
+// ════════════════════════════
+//  QUESTION DATA
+// ════════════════════════════
+const QS = [
+  {
+    type:'bubble-pop', section:'phonics',
+    instr:'🎈 Pop ALL the bubbles with words that start with <b>B</b>!<br><small>Click each one, then press Check!</small>',
+    words:[{w:'bee',ok:true},{w:'vet',ok:false},{w:'bounce',ok:true},{w:'fire',ok:false},{w:'brave',ok:true},{w:'van',ok:false}],
+    hint:'B words: <b>bee</b>, <b>bounce</b>, <b>brave</b>!'
+  },
+  {
+    type:'odd-one-out', section:'phonics',
+    instr:'🔍 Click the word with a <b>DIFFERENT</b> starting sound!',
+    words:['fence','fly','blue','funny'], answer:'blue',
+    hint:'"blue" starts with <b>B</b>, not F — the odd one out!'
+  },
+  {
+    type:'odd-one-out', section:'phonics',
+    instr:'🔍 Click the word with a <b>DIFFERENT</b> starting sound!',
+    words:['friend','bounce','ball','Burt'], answer:'friend',
+    hint:'"friend" starts with <b>F</b>, not B — the odd one out!'
+  },
+  {
+    type:'odd-one-out', section:'phonics',
+    instr:'🔍 Click the word with a <b>DIFFERENT</b> starting sound!',
+    words:['very','better','Vicky','vibrant'], answer:'better',
+    hint:'"better" starts with <b>B</b>, not V — the odd one out!'
+  },
+  {
+    type:'letter-choice', section:'phonics',
+    instr:'✏️ What letter does this word start with?',
+    word:'farmer', emoji:'🧑‍🌾', answer:'f',
+    hint:'"farmer" starts with the letter <b>F</b>!'
+  },
+  {
+    type:'letter-choice', section:'phonics',
+    instr:'✏️ What letter does this word start with?',
+    word:'viper', emoji:'🐍', answer:'v',
+    hint:'"viper" starts with the letter <b>V</b>!'
+  },
+  {
+    type:'letter-choice', section:'phonics',
+    instr:'✏️ What letter does this word start with?',
+    word:'bounce', emoji:'⚽', answer:'b',
+    hint:'"bounce" starts with the letter <b>B</b>!'
+  },
+  {
+    type:'word-sort', section:'phonics',
+    instr:'🗂️ Sort the words into the right hive!<br><small>Click a word ➜ then click its hive</small>',
+    words:[{w:'ball',l:'b'},{w:'van',l:'v'},{w:'fix',l:'f'},{w:'bee',l:'b'},{w:'very',l:'v'},{w:'fire',l:'f'}],
+    hint:'B=ball/bee &nbsp; F=fix/fire &nbsp; V=van/very'
+  },
+  {
+    type:'mc', section:'grammar',
+    instr:'⭐ What is the superlative form of <b>"big"</b>?',
+    choices:['biger','biggest','bigest','more big'], answer:'biggest',
+    hint:'Double the last letter + <b>-est</b> → biggest!'
+  },
+  {
+    type:'mc', section:'grammar',
+    instr:'⭐ What is the superlative form of <b>"good"</b>?',
+    choices:['goodest','most good','best','gooder'], answer:'best',
+    hint:'Irregular! good → <b>best</b> (no rule, just remember it!)'
+  },
+  {
+    type:'mc', section:'grammar',
+    instr:'⭐ What is the superlative form of <b>"funny"</b>?',
+    choices:['funniest','funnyest','most funny','funnyer'], answer:'funniest',
+    hint:'Change -y to -i then add <b>-est</b> → funniest!'
+  },
+  {
+    type:'sentence', section:'grammar',
+    instr:'📝 Choose the correct word to complete the sentence!',
+    before:'The whale is the', after:'animal in the sea.', blank:'',
+    choices:['biggest','smallest','fastest','tallest'], answer:'biggest',
+    hint:'A whale is very BIG → it\'s the <b>biggest</b>!'
+  },
+  {
+    type:'sentence', section:'grammar',
+    instr:'📝 Choose the correct word to complete the sentence!',
+    before:'Super Turtle is the', after:'of all three. (★★★ smart)',blank:'',
+    choices:['fastest','biggest','smartest','strongest'], answer:'smartest',
+    hint:'Super Turtle has ★★★ for smart → <b>smartest</b>!'
+  },
+  {
+    type:'tf', section:'grammar',
+    instr:'✅ True or False?',
+    stmt:'The superlative of "bad" is "worst".',
+    answer:true,
+    hint:'Yes! bad → <b>worst</b> is an irregular superlative!'
+  },
+  {
+    type:'tf', section:'grammar',
+    instr:'✅ True or False?',
+    stmt:'The superlative of "small" is "smallest".',
+    answer:true,
+    hint:'Yes! small → <b>smallest</b> — just add -est!'
+  },
+  {
+    type:'oracy', section:'grammar',
+    instr:'🎤 Lisa is giving a speech. Is she doing this well?',
+    stmt:'She is speaking clearly and looking up at the audience.',
+    answer:'😊',
+    hint:'Speaking clearly + eye contact = <b>great speaker!</b> 😊'
+  },
+  {
+    type:'tf', section:'reading',
+    instr:'📖 True or False?',
+    stmt:'Crayons were invented in 1903.',
+    answer:true,
+    hint:'True! The text says: "Crayons were invented in <b>1903</b>."'
+  },
+  {
+    type:'tf', section:'reading',
+    instr:'📖 True or False?',
+    stmt:'The first crayon box cost ten cents.',
+    answer:false,
+    hint:'False! It cost <b>five</b> cents, not ten!'
+  },
+  {
+    type:'mc', section:'reading',
+    instr:'📖 When was the modern toaster invented?',
+    choices:['1903','1923','1926','1876'], answer:'1926',
+    hint:'The modern toaster was invented in <b>1926</b>!'
+  },
+  {
+    type:'word-bank', section:'reading',
+    instr:'📖 Click the correct word to complete the sentence!',
+    before:'The toaster', after:'both sides of the bread.',blank:'',
+    choices:['invented','heated','melted','popped'], answer:'heated',
+    hint:'The toaster <b>heated</b> both sides of the bread!'
+  }
+];
+
+// ════════════════════════════
+//  STATE
+// ════════════════════════════
+let cur=0,score=0,timeLeft=1800,timerInt=null,gameOn=false;
+let selBubbles=new Set(),selSortWord=null,sortMap={};
+
+// ════════════════════════════
+//  AUDIO
+// ════════════════════════════
+function tone(freqs,type='sine'){
+  try{
+    const ctx=new(window.AudioContext||window.webkitAudioContext)();
+    freqs.forEach(([f,t,d])=>{
+      const o=ctx.createOscillator(),g=ctx.createGain();
+      o.connect(g);g.connect(ctx.destination);
+      o.frequency.value=f;o.type=type;
+      g.gain.setValueAtTime(0,ctx.currentTime+t);
+      g.gain.linearRampToValueAtTime(.4,ctx.currentTime+t+.04);
+      g.gain.exponentialRampToValueAtTime(.01,ctx.currentTime+t+d);
+      o.start(ctx.currentTime+t);o.stop(ctx.currentTime+t+d+.05);
+    });
+  }catch(e){}
+}
+const sndOK=()=>tone([[523,.0,.25],[659,.18,.25],[784,.36,.3]]);
+const sndNo=()=>tone([[280,.0,.15],[220,.15,.25]],'sawtooth');
+const sndWin=()=>tone([[523,.0,.2],[659,.2,.2],[784,.4,.2],[1046,.6,.35],[1318,.85,.5]]);
+
+// ════════════════════════════
+//  CONFETTI
+// ════════════════════════════
+function confetti(){
+  const cols=['#FFD700','#FF6B35','#5C2D91','#43A047','#1565C0','#E91E63','#00BCD4'];
+  for(let i=0;i<55;i++){
+    const d=document.createElement('div');
+    d.className='cf';
+    d.style.cssText=`left:${Math.random()*100}vw;width:${8+Math.random()*10}px;height:${8+Math.random()*10}px;background:${cols[Math.floor(Math.random()*cols.length)]};border-radius:${Math.random()>.5?'50%':'2px'};animation-duration:${1.4+Math.random()*2}s;animation-delay:${Math.random()*.4}s`;
+    document.body.appendChild(d);
+    setTimeout(()=>d.remove(),3500);
+  }
+}
+
+// ════════════════════════════
+//  FEEDBACK
+// ════════════════════════════
+const MSGS_OK=['🌟 Excellent!','🎉 Amazing!','💪 Superstar!','🏆 Perfect!','🚀 Brilliant!','✨ Fantastic!','👏 Well done!'];
+const MSGS_NO=["🐝 Keep going! You've got this!","💪 Almost! Try the next one!","🌈 Vicky Bee believes in you!","⭐ Great effort! Keep learning!","🎯 Don't stop, champion!"];
+const EMOJIS_OK=['🌟','🎉','⭐','🏆','🎊'];
+const EMOJIS_NO=['😊','💪','🐝','🌈','🎯'];
+
+function showFB(isOK,hint=''){
+  const fb=document.getElementById('feedback');
+  const em=document.getElementById('fbEmoji');
+  const mg=document.getElementById('fbMsg');
+  const arr=isOK?EMOJIS_OK:EMOJIS_NO;
+  em.textContent=arr[Math.floor(Math.random()*arr.length)];
+  const msgs=isOK?MSGS_OK:MSGS_NO;
+  mg.innerHTML=msgs[Math.floor(Math.random()*msgs.length)]+(hint?`<small>💡 ${hint}</small>`:'');
+  fb.className='feedback '+(isOK?'fb-correct':'fb-wrong')+' show';
+  if(isOK){confetti();sndOK();}else{sndNo();document.getElementById('qCard').classList.add('shake');setTimeout(()=>document.getElementById('qCard').classList.remove('shake'),500);}
+  setTimeout(()=>{fb.className='feedback';setTimeout(next,300);},isOK?1500:2600);
+}
+
+// ════════════════════════════
+//  TIMER
+// ════════════════════════════
+function startTimer(){
+  timerInt=setInterval(()=>{
+    timeLeft--;
+    const m=Math.floor(timeLeft/60),s=timeLeft%60;
+    const el=document.getElementById('timerEl');
+    el.textContent=m+':'+(s<10?'0':'')+s;
+    if(timeLeft<=60)el.className='timer-pill danger';
+    else if(timeLeft<=300)el.className='timer-pill warn';
+    if(timeLeft<=0){clearInterval(timerInt);endGame();}
+  },1000);
+}
+
+// ════════════════════════════
+//  FLOW
+// ════════════════════════════
+function startGame(){
+  cur=0;score=0;timeLeft=1800;gameOn=true;
+  selBubbles=new Set();selSortWord=null;sortMap={};
+  document.getElementById('scoreVal').textContent='0';
+  document.getElementById('timerEl').className='timer-pill';
+  show('game-screen');
+  startTimer();
+  renderQ();
+}
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
+function next(){
+  cur++;
+  if(cur>=QS.length){endGame();return;}
+  selBubbles=new Set();selSortWord=null;sortMap={};
+  const c=document.getElementById('qCard');
+  c.style.opacity='0';c.style.transform='translateX(30px)';
+  setTimeout(()=>{
+    renderQ();
+    c.style.transition='none';
+    c.style.opacity='0';c.style.transform='translateX(-20px)';
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      c.style.transition='opacity .3s,transform .3s';
+      c.style.opacity='1';c.style.transform='translateX(0)';
+    }));
+  },220);
+}
+function endGame(){
+  clearInterval(timerInt);gameOn=false;
+  document.getElementById('rNum').textContent=score;
+  let title,msg,stars;
+  if(score>=18){title='🏆 Outstanding!';msg='You are an English superstar! Vicky Bee is so proud! 🐝✨';stars='⭐⭐⭐⭐⭐';}
+  else if(score>=15){title='🌟 Excellent!';msg='Amazing work! You really know your English! Keep it up! 💪';stars='⭐⭐⭐⭐';}
+  else if(score>=12){title='😊 Great Job!';msg="Well done! You're getting better every day! 🌈";stars='⭐⭐⭐';}
+  else if(score>=8){title='💪 Keep Going!';msg='Good effort! Review the lessons and try again! 🎯';stars='⭐⭐';}
+  else{title='🐝 You Can Do It!';msg='Study the lessons and try again — Vicky Bee believes in you! 📚';stars='⭐';}
+  document.getElementById('rTitle').textContent=title;
+  document.getElementById('rMsg').textContent=msg;
+  document.getElementById('rStars').textContent=stars;
+  sndWin();confetti();
+  setTimeout(()=>show('result-screen'),600);
+}
+function restartGame(){show('start-screen');}
+
+// ════════════════════════════
+//  RENDER
+// ════════════════════════════
+function renderQ(){
+  const q=QS[cur],card=document.getElementById('qCard');
+  document.getElementById('progLabel').textContent=`Question ${cur+1} of ${QS.length}`;
+  document.getElementById('sectionLabel').textContent=q.section.charAt(0).toUpperCase()+q.section.slice(1);
+  document.getElementById('progFill').style.width=((cur+1)/QS.length*100)+'%';
+  const tagClass={phonics:'tag-phonics',grammar:'tag-grammar',reading:'tag-reading'};
+  let html=`<span class="section-tag ${tagClass[q.section]}">${q.section}</span>
+    <div class="q-num">Question ${cur+1} / ${QS.length} &nbsp;·&nbsp; 1 ⭐</div>
+    <div class="q-instr">${q.instr}</div>`;
+  switch(q.type){
+    case'bubble-pop': html+=rBubble(q); break;
+    case'odd-one-out': html+=rOdd(q); break;
+    case'letter-choice': html+=rLetter(q); break;
+    case'word-sort': html+=rSort(q); break;
+    case'mc': html+=rMC(q); break;
+    case'sentence': html+=rSentence(q); break;
+    case'tf': html+=rTF(q); break;
+    case'oracy': html+=rOracy(q); break;
+    case'word-bank': html+=rWordBank(q); break;
+  }
+  card.innerHTML=html;
+}
+
+// BUBBLE POP
+function rBubble(q){
+  let h='<div class="bubbles-wrap">';
+  q.words.forEach((w,i)=>h+=`<div class="bubble" id="bub${i}" onclick="togBub(${i})">${w.w}</div>`);
+  return h+`</div><button class="btn-check" onclick="chkBubble()">✅ Check!</button>`;
+}
+function togBub(i){
+  if(selBubbles.has(i)){selBubbles.delete(i);document.getElementById('bub'+i).classList.remove('sel');}
+  else{selBubbles.add(i);document.getElementById('bub'+i).classList.add('sel');}
+}
+function chkBubble(){
+  const q=QS[cur];
+  document.querySelectorAll('.bubble').forEach(b=>b.onclick=null);
+  document.querySelector('.btn-check').disabled=true;
+  let ok=true;
+  q.words.forEach((w,i)=>{
+    const b=document.getElementById('bub'+i);
+    b.classList.remove('sel');
+    if(w.ok&&selBubbles.has(i)) b.classList.add('ok');
+    else if(w.ok&&!selBubbles.has(i)){b.classList.add('no');ok=false;}
+    else if(!w.ok&&selBubbles.has(i)){b.classList.add('no');ok=false;}
+  });
+  if(ok){score++;document.getElementById('scoreVal').textContent=score;}
+  setTimeout(()=>showFB(ok,ok?'':q.hint),700);
+}
+
+// ODD ONE OUT
+function rOdd(q){
+  let h='<div class="word-cards">';
+  q.words.forEach(w=>h+=`<div class="wcard" onclick="chkOdd(this,'${w}')">${w}</div>`);
+  return h+'</div>';
+}
+function chkOdd(el,w){
+  const q=QS[cur];
+  document.querySelectorAll('.wcard').forEach(c=>c.onclick=null);
+  const ok=w===q.answer;
+  el.classList.add(ok?'ok':'no');
+  if(!ok) document.querySelectorAll('.wcard').forEach(c=>{if(c.textContent===q.answer)c.classList.add('ok');});
+  if(ok){score++;document.getElementById('scoreVal').textContent=score;}
+  setTimeout(()=>showFB(ok,q.hint),700);
+}
+
+// LETTER CHOICE
+function rLetter(q){
+  return `<div class="letter-display"><div class="lem">${q.emoji}</div><div class="letxt">${q.word}</div></div>
+  <div class="letter-btns">
+    <button class="lbtn b" onclick="chkLetter(this,'b')">b</button>
+    <button class="lbtn f" onclick="chkLetter(this,'f')">f</button>
+    <button class="lbtn v" onclick="chkLetter(this,'v')">v</button>
+  </div>`;
+}
+function chkLetter(el,l){
+  const q=QS[cur];
+  document.querySelectorAll('.lbtn').forEach(b=>b.onclick=null);
+  const ok=l===q.answer;
+  el.classList.add(ok?'ok':'no');
+  if(!ok) document.querySelectorAll('.lbtn').forEach(b=>{if(b.textContent===q.answer)b.classList.add('ok');});
+  if(ok){score++;document.getElementById('scoreVal').textContent=score;}
+  setTimeout(()=>showFB(ok,q.hint),700);
+}
+
+// WORD SORT
+function rSort(q){
+  let wh='<div class="sort-words-row">';
+  q.words.forEach(w=>wh+=`<div class="sw" data-w="${w.w}" data-l="${w.l}" onclick="selSW(this)">${w.w}</div>`);
+  wh+='</div>';
+  const bkts=['b','f','v'];
+  const icons={b:'🐝',f:'🌻',v:'⚡'};
+  let bh='<div class="buckets-row">';
+  bkts.forEach(l=>bh+=`<div class="bucket ${l}-bkt" onclick="placeSW('${l}')"><div class="bkt-lbl">${l.toUpperCase()} ${icons[l]}</div><div class="bkt-words" id="bkt-${l}"></div></div>`);
+  bh+='</div>';
+  return wh+bh+`<button class="btn-check" onclick="chkSort()">✅ Check!</button>`;
+}
+function selSW(el){
+  if(el.classList.contains('placed'))return;
+  document.querySelectorAll('.sw').forEach(s=>s.classList.remove('sel'));
+  selSortWord=el;el.classList.add('sel');
+}
+function placeSW(l){
+  if(!selSortWord)return;
+  const w=selSortWord.dataset.w;
+  sortMap[w]=l;
+  selSortWord.classList.add('placed');selSortWord.classList.remove('sel');
+  selSortWord=null;
+  const s=document.createElement('span');s.className='bkt-word';s.textContent=w;
+  document.getElementById('bkt-'+l).appendChild(s);
+}
+function chkSort(){
+  const q=QS[cur];
+  if(Object.keys(sortMap).length<q.words.length){
+    document.getElementById('qCard').classList.add('shake');
+    setTimeout(()=>document.getElementById('qCard').classList.remove('shake'),500);return;
+  }
+  document.querySelector('.btn-check').disabled=true;
+  let ok=true;
+  q.words.forEach(w=>{if(sortMap[w.w]!==w.l)ok=false;});
+  if(ok){score++;document.getElementById('scoreVal').textContent=score;}
+  showFB(ok,ok?'':q.hint);
+}
+
+// MULTIPLE CHOICE
+function rMC(q){
+  let h=q.question?`<div class="mc-q">${q.question}</div>`:'';
+  h+='<div class="mc-grid">';
+  q.choices.forEach(c=>h+=`<button class="mcbtn" onclick="chkMC(this,'${c}')">${c}</button>`);
+  return h+'</div>';
+}
+function chkMC(el,c){
+  const q=QS[cur];
+  document.querySelectorAll('.mcbtn').forEach(b=>b.onclick=null);
+  const ok=c===q.answer;
+  el.classList.add(ok?'ok':'no');
+  if(!ok) document.querySelectorAll('.mcbtn').forEach(b=>{if(b.textContent===q.answer)b.classList.add('ok');});
+  if(ok){score++;document.getElementById('scoreVal').textContent=score;}
+  setTimeout(()=>showFB(ok,q.hint),700);
+}
+
+// SENTENCE COMPLETE
+function rSentence(q){
+  return `<div class="sent-display">${q.before} <span class="blank" id="blk">______</span> ${q.after}</div>
+  <div class="mc-grid">${q.choices.map(c=>`<button class="mcbtn" onclick="chkSent(this,'${c}')">${c}</button>`).join('')}</div>`;
+}
+function chkSent(el,c){
+  const q=QS[cur];
+  document.querySelectorAll('.mcbtn').forEach(b=>b.onclick=null);
+  const ok=c===q.answer;
+  el.classList.add(ok?'ok':'no');
+  const blk=document.getElementById('blk');
+  blk.textContent=ok?c:q.answer;
+  blk.style.color=ok?'#2E7D32':'#2E7D32';
+  if(!ok) document.querySelectorAll('.mcbtn').forEach(b=>{if(b.textContent===q.answer)b.classList.add('ok');});
+  if(ok){score++;document.getElementById('scoreVal').textContent=score;}
+  setTimeout(()=>showFB(ok,q.hint),700);
+}
+
+// TRUE / FALSE
+function rTF(q){
+  return `<div class="stmt-box">"${q.stmt}"</div>
+  <div class="tf-row">
+    <button class="tfbtn t" onclick="chkTF(this,true)">✅ TRUE</button>
+    <button class="tfbtn f" onclick="chkTF(this,false)">❌ FALSE</button>
+  </div>`;
+}
+function chkTF(el,ans){
+  const q=QS[cur];
+  document.querySelectorAll('.tfbtn').forEach(b=>b.onclick=null);
+  const ok=ans===q.answer;
+  el.classList.add(ok?'ok':'no');
+  if(!ok) document.querySelectorAll('.tfbtn').forEach(b=>{
+    if((b.classList.contains('t')&&q.answer===true)||(b.classList.contains('f')&&q.answer===false))b.classList.add('ok');
+  });
+  if(ok){score++;document.getElementById('scoreVal').textContent=score;}
+  setTimeout(()=>showFB(ok,q.hint),700);
+}
+
+// ORACY (EMOJI PICK)
+function rOracy(q){
+  return `<div class="oracy-stmt">${q.stmt}</div>
+  <div class="emoji-pick-row">
+    <div class="epick" onclick="chkOracy(this,'😊')">😊</div>
+    <div class="epick" onclick="chkOracy(this,'☹️')">☹️</div>
+  </div>`;
+}
+function chkOracy(el,ans){
+  const q=QS[cur];
+  document.querySelectorAll('.epick').forEach(e=>e.onclick=null);
+  const ok=ans===q.answer;
+  el.classList.add(ok?'ok':'no');
+  if(!ok) document.querySelectorAll('.epick').forEach(e=>{if(e.textContent===q.answer)e.classList.add('ok');});
+  if(ok){score++;document.getElementById('scoreVal').textContent=score;}
+  setTimeout(()=>showFB(ok,q.hint),700);
+}
+
+// WORD BANK
+function rWordBank(q){
+  let h=`<div class="sent-display">${q.before} <span class="blank" id="blk">______</span> ${q.after}</div><div class="bank-row">`;
+  q.choices.forEach(c=>h+=`<div class="bword" onclick="chkWB(this,'${c}')">${c}</div>`);
+  return h+'</div>';
+}
+function chkWB(el,c){
+  const q=QS[cur];
+  document.querySelectorAll('.bword').forEach(b=>b.onclick=null);
+  const ok=c===q.answer;
+  el.classList.add(ok?'ok':'no');
+  const blk=document.getElementById('blk');
+  blk.textContent=ok?c:q.answer;
+  blk.style.color='#2E7D32';
+  if(!ok) document.querySelectorAll('.bword').forEach(b=>{if(b.textContent===q.answer)b.classList.add('ok');});
+  if(ok){score++;document.getElementById('scoreVal').textContent=score;}
+  setTimeout(()=>showFB(ok,q.hint),700);
+}
+</script>
+</body>
+</html>

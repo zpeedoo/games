@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لعبة الامتحان التفاعلي - 50 سؤالاً</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-wrapper">
+        <!-- شريط المعلومات العلوي -->
+        <header class="game-header">
+            <div class="score-board">
+                <span class="star-icon">⭐</span> Score: <span id="score">0</span> / <span id="max-score-display">0</span>
+                <span style="margin: 0 10px; border-left: 2px solid rgba(255,255,255,0.5); padding-left: 10px;">
+                    ❌ Errors: <span id="errors" style="color: #ff4757;">0</span>
+                </span>
+            </div>
+            <h1 class="game-title">✨ بطل الإنجليزية ✨</h1>
+            <div class="timer-board">
+                <span class="clock-icon">⏰</span>
+                <span id="timer">30:00</span>
+            </div>
+        </header>
+
+        <!-- شريط التقدم -->
+        <div class="progress-container hidden" id="progress-container">
+            <div class="progress-bar" id="progress-bar"></div>
+            <div class="progress-text" id="progress-text">0 / 0</div>
+        </div>
+
+        <!-- منطقة الألعاب -->
+        <main class="game-container" id="game-container">
+            
+            <!-- أزرار المساعدة (مخفية في شاشة البداية) -->
+            <div class="helper-controls hidden" id="helper-controls">
+                <button class="helper-btn" id="show-answer-btn">💡 Show Answer</button>
+                <button class="helper-btn" id="skip-btn">⏭️ Skip</button>
+            </div>
+
+            <!-- شاشة البداية -->
+            <section class="screen active" id="screen-start">
+                <h2>Welcome to the English Hero Challenge!</h2>
+                <p>You have 30 minutes to collect 51 stars. Are you ready?</p>
+                <button class="btn primary-btn" id="start-btn">Start Playing 🚀</button>
+            </section>
+
+            <!-- الشاشة الديناميكية الموحدة لكل الأسئلة -->
+            <section class="screen" id="screen-dynamic">
+                <div id="dynamic-content">
+                    <!-- سيتم حقن المحتوى هنا بواسطة الجافاسكربت -->
+                </div>
+            </section>
+
+            <!-- طبقة التفاعل البصري (نجوم أو وجه حزين) -->
+            <div id="feedback-overlay" class="feedback-overlay hidden">
+                <div id="feedback-icon" class="feedback-icon"></div>
+            </div>
+
+            <!-- شاشة النهاية -->
+            <section class="screen" id="screen-end">
+                <h2 id="end-title">Great Job Hero! 🎉</h2>
+                <p>You have finished the challenge. Here is your final score:</p>
+                <div class="final-score">
+                    <span id="final-score-val">0</span> / 51
+                </div>
+                <button class="btn primary-btn" id="restart-btn">Play Again 🔄</button>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- تأثيرات الاحتفال (Confetti) -->
+    <canvas id="confetti-canvas"></canvas>
+
+    <script src="js/game.js"></script>
+</body>
+</html>
