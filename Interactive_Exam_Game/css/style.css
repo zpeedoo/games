@@ -226,21 +226,22 @@ body {
 .bubbles-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 15px;
+    gap: 25px;
     justify-content: center;
     width: 100%;
 }
 
 .bubble {
-    width: clamp(60px, 15vw, 80px);
+    min-width: clamp(60px, 15vw, 80px);
     height: clamp(60px, 15vw, 80px);
+    padding: 0 20px;
     background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.8), rgba(255,255,255,0.4));
     border: 2px solid rgba(255,255,255,0.8);
-    border-radius: 50%;
+    border-radius: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-size: clamp(1.2rem, 3.5vw, 1.8rem);
     font-weight: 900;
     color: var(--primary);
     cursor: pointer;
@@ -281,10 +282,10 @@ body {
 /* Maze */
 .maze-container { display: flex; flex-direction: column; align-items: center; width: 100%; }
 .maze-grid { display: grid; grid-template-columns: repeat(5, 1fr); grid-template-rows: repeat(5, 1fr); gap: 2px; background: #bdc3c7; border: 4px solid #2c3e50; border-radius: 10px; padding: 5px; width: 90%; max-width: 400px; aspect-ratio: 1/1; margin-bottom: 20px; }
-.maze-cell { background: white; border-radius: 4px; display: flex; justify-content: center; align-items: center; font-size: clamp(1.5rem, 5vw, 2.5rem); position: relative; transition: background 0.2s; }
+.maze-cell { background: white; border-radius: 4px; display: flex; flex-direction: column; justify-content: center; align-items: center; font-size: clamp(1.5rem, 5vw, 2.5rem); position: relative; transition: background 0.2s; }
 .maze-cell.wall { background: #34495e; }
 .maze-bee { animation: float 1s infinite; z-index: 10; }
-.maze-word { font-size: clamp(0.7rem, 2vw, 1rem); font-weight: bold; color: #2c3e50; text-align: center; word-break: break-word; background: var(--accent); border-radius: 5px; padding: 2px; }
+.maze-word { font-size: clamp(0.6rem, 1.8vw, 0.9rem); font-weight: bold; color: #2c3e50; text-align: center; white-space: nowrap; background: var(--accent); border-radius: 3px; padding: 2px 4px; z-index: 5; margin-top: 2px; }
 .maze-controls { display: grid; grid-template-columns: 50px 50px 50px; grid-template-rows: 50px 50px; gap: 10px; justify-content: center; }
 .maze-btn { background: var(--primary); color: white; border: none; border-radius: 10px; font-size: 1.5rem; cursor: pointer; box-shadow: 0 4px 0 #2c3e50; display: flex; justify-content: center; align-items: center; }
 .maze-btn:active { transform: translateY(4px); box-shadow: 0 0 0 #2c3e50; }
@@ -773,3 +774,491 @@ body {
 .flip-up-anim { animation: flip-up 0.2s ease-out; }
 .flip-down-anim { animation: flip-down 0.2s ease-out; }
 #confetti-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; }
+
+/* Typing Game */
+.typing-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+}
+.typing-question {
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    font-weight: bold;
+    color: #2c3e50;
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    border: 3px dashed var(--secondary);
+    text-align: center;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+.typing-input-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+    max-width: 400px;
+}
+.typing-input {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.5rem;
+    font-family: 'Fredoka One', cursive;
+    color: var(--primary);
+    border: 3px solid #bdc3c7;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: inset 0 3px 5px rgba(0,0,0,0.1);
+    transition: all 0.3s;
+}
+.typing-input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 15px rgba(74, 105, 189, 0.3), inset 0 3px 5px rgba(0,0,0,0.1);
+}
+.typing-input.error {
+    border-color: var(--danger);
+    background-color: #ffeaa7;
+    animation: shake 0.4s ease-in-out;
+}
+.typing-check-btn {
+    width: 100%;
+}
+
+/* ==========================================================================
+   New Question Types: Fill Blanks, Choose & Use, Grammar Find
+   ========================================================================== */
+
+/* Fill Blanks */
+.fb-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+}
+.fb-sentences {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 700px;
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    border: 3px solid #e2e8f0;
+}
+.fb-sentence-row {
+    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+    font-weight: 700;
+    color: #2d3748;
+    line-height: 2;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    border-bottom: 1px dashed #edf2f7;
+    padding-bottom: 12px;
+}
+.fb-sentence-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+.blank-slot {
+    display: inline-block;
+    min-width: 120px;
+    height: 38px;
+    border: 2px dashed var(--primary);
+    border-radius: 10px;
+    margin: 0 8px;
+    background: #edf2f7;
+    cursor: pointer;
+    vertical-align: middle;
+    text-align: center;
+    line-height: 34px;
+    font-weight: 800;
+    color: var(--primary);
+    transition: all 0.2s ease;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+}
+.blank-slot:hover {
+    background: #e2e8f0;
+    transform: scale(1.02);
+}
+.blank-slot.filled {
+    border: 2px solid var(--primary);
+    background: white;
+    color: var(--primary);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+.blank-slot.correct-slot {
+    border-color: var(--success) !important;
+    background: #e8f8f5 !important;
+    color: var(--success) !important;
+}
+.blank-slot.error-slot {
+    border-color: var(--danger) !important;
+    background: #fdf2f2 !important;
+    color: var(--danger) !important;
+    animation: shake 0.4s ease-in-out;
+}
+
+/* Choose & Use */
+.cu-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+}
+.cu-choices {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 500px;
+    margin: 10px 0;
+}
+.cu-choice-btn {
+    flex: 1;
+    min-width: 120px;
+    padding: 15px 20px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    border-radius: 12px;
+    border: 3px solid #cbd5e0;
+    background: white;
+    color: #4a5568;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+.cu-choice-btn:hover:not(:disabled) {
+    border-color: var(--primary);
+    background: #f7fafc;
+    transform: translateY(-2px);
+}
+.cu-choice-btn.correct {
+    border-color: var(--success);
+    background: var(--success);
+    color: white;
+}
+.cu-choice-btn.wrong {
+    border-color: var(--danger);
+    background: var(--danger);
+    color: white;
+    animation: shake 0.4s ease-in-out;
+}
+.cu-sentence-section {
+    width: 100%;
+    max-width: 500px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.4s ease;
+    display: none;
+}
+.cu-sentence-section.active {
+    opacity: 1;
+    transform: translateY(0);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.cu-input {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.2rem;
+    border-radius: 12px;
+    border: 3px solid #cbd5e0;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+.cu-input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+.cu-input.correct {
+    border-color: var(--success);
+    background: #e8f8f5;
+}
+.cu-input.error {
+    border-color: var(--danger);
+    background: #fdf2f2;
+    animation: shake 0.4s ease-in-out;
+}
+
+/* Grammar Find */
+.gf-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+}
+.gf-card {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    max-width: 600px;
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    border: 3px solid #e2e8f0;
+}
+.gf-row {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border-bottom: 1px dashed #edf2f7;
+    padding-bottom: 12px;
+    width: 100%;
+}
+.gf-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+.gf-label {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #4a5568;
+    text-align: left;
+}
+.gf-input-wrapper {
+    display: flex;
+    gap: 10px;
+}
+.gf-input {
+    flex: 1;
+    padding: 12px;
+    font-size: 1.1rem;
+    border-radius: 10px;
+    border: 2px solid #cbd5e0;
+    transition: all 0.2s ease;
+}
+.gf-input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+.gf-input.correct {
+    border-color: var(--success);
+    background: #e8f8f5;
+}
+.gf-input.error {
+    border-color: var(--danger);
+    background: #fdf2f2;
+    animation: shake 0.4s ease-in-out;
+}
+
+/* ── Back button disabled style ── */
+.helper-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* ── Sentence Builder — context note ── */
+.sb-context-note {
+    background: #eef2ff;
+    border: 2px solid var(--primary);
+    border-radius: 12px;
+    padding: 10px 18px;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--primary);
+    text-align: center;
+    margin-bottom: 10px;
+    width: 100%;
+    max-width: 600px;
+}
+
+/* ── Choose & Use — redesigned step labels & sentence UI ── */
+.cu-step-label {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--primary);
+    text-align: center;
+    margin-bottom: 8px;
+    width: 100%;
+}
+.cu-sentence-display {
+    font-size: clamp(1.1rem, 2.8vw, 1.4rem);
+    font-weight: 700;
+    color: #2c3e50;
+    background: white;
+    padding: 14px 20px;
+    border-radius: 14px;
+    border: 3px dashed var(--secondary);
+    text-align: center;
+    margin-bottom: 14px;
+    line-height: 2.2;
+    width: 100%;
+    max-width: 540px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+.cu-sent-blank {
+    display: inline-block;
+    min-width: 100px;
+    border-bottom: 3px solid var(--primary);
+    color: var(--primary);
+    font-weight: 900;
+    margin: 0 6px;
+    padding: 0 4px;
+    text-align: center;
+    transition: color .3s, border-color .3s;
+}
+.cu-sent-choices {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 4px;
+}
+.cu-sent-choice-btn {
+    padding: 13px 24px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    border-radius: 12px;
+    border: 3px solid #cbd5e0;
+    background: white;
+    color: #4a5568;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: 'Nunito', sans-serif;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.06);
+}
+.cu-sent-choice-btn:hover:not(:disabled) {
+    border-color: var(--primary);
+    background: #f0f4ff;
+    transform: translateY(-2px);
+}
+.cu-sent-choice-btn.correct {
+    border-color: var(--success);
+    background: var(--success);
+    color: white;
+}
+.cu-sent-choice-btn.wrong {
+    border-color: var(--danger);
+    background: var(--danger);
+    color: white;
+    animation: shake 0.4s ease-in-out;
+}
+.cu-sent-pr {
+    display: block;
+    font-size: 0.72rem;
+    color: #7f8c8d;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    margin-top: 4px;
+}
+
+/* Arabic label under drag words (fill_blanks word bank & drag_drop items) */
+.word-ar-label {
+    display: block;
+    font-size: 0.7rem;
+    color: rgba(44,62,80,0.65);
+    font-weight: 700;
+    margin-top: 3px;
+    letter-spacing: 0.3px;
+}
+
+/* Arabic translation in grammar_find passage */
+.gf-sent-ar {
+    display: block;
+    font-size: 0.88rem;
+    color: #6c5ce7;
+    font-weight: 700;
+    margin-top: 2px;
+    direction: rtl;
+    text-align: right;
+}
+
+/* Arabic label under window_wheel words */
+.window-word-ar {
+    display: block;
+    font-size: 0.62rem;
+    color: #6c5ce7;
+    font-weight: 700;
+    text-align: center;
+    margin-top: 2px;
+}
+
+/* Grammar Find — sentence items in passage with pronunciation */
+.gf-sent-item {
+    padding: 6px 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-bottom: 4px;
+    border-left: 3px solid transparent;
+}
+.gf-sent-item:hover {
+    background: rgba(0,0,0,0.03);
+    border-left-color: var(--secondary);
+}
+.gf-sent-item.playing {
+    background: rgba(120,224,143,0.15);
+    border-left-color: var(--success);
+}
+.gf-sent-en {
+    display: block;
+    font-weight: 700;
+    color: #2c3e50;
+    font-size: 0.95rem;
+}
+.gf-sent-item .transliteration {
+    margin-top: 2px;
+}
+
+/* Grammar Find - Passage Reference Box */
+.gf-passage-box {
+    background: #fff;
+    border: 3px dashed var(--secondary);
+    border-radius: 15px;
+    padding: 15px 20px;
+    margin-bottom: 15px;
+    max-height: 210px;
+    overflow-y: auto;
+    text-align: left;
+    width: 100%;
+    max-width: 700px;
+    font-size: 0.95rem;
+    line-height: 1.85;
+    color: #2c3e50;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    direction: ltr;
+    scroll-behavior: smooth;
+}
+.gf-passage-header {
+    font-weight: 900;
+    color: var(--primary);
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+    border-bottom: 2px solid var(--glass-border);
+    padding-bottom: 8px;
+    position: sticky;
+    top: 0;
+    background: #fff;
+}
+.gf-passage-text p {
+    margin-bottom: 10px;
+}
+.gf-passage-text strong {
+    color: var(--primary);
+}
+.gf-passage-text em {
+    font-style: normal;
+    font-weight: 700;
+    color: #c0392b;
+    background: #fef9e7;
+    border-radius: 3px;
+    padding: 0 2px;
+}
+

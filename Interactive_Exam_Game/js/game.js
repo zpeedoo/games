@@ -59,20 +59,154 @@ const screensData = [
     { type: 'bubble_pop', id: 'b9', sentence: "The _et helped my dog.", trans: "الطبيب البيطري (فيت) ساعد كلبي.", correct: "v", wrong: ["b", "f"], icon: '🧑‍⚕️' },
     { type: 'bubble_pop', id: 'b10', sentence: "The _oaster is hot.", trans: "المحمصة (توستر) ساخنة.", correct: "t", wrong: ["b", "v"], img: 'assets/images/toaster.png' },
 
-    // --- Maze Screens ---
-    { type: 'maze', id: 'm1', question: "What is the superlative form of 'smart'?", trans: "الـ Superlative من كلمة (smart)؟", correct: "smartest", wrong: ["smarter", "smart"], icon: '🧠' },
-    { type: 'maze', id: 'm2', question: "What is the superlative form of 'heavy'?", trans: "الـ Superlative من كلمة (heavy)؟", correct: "heaviest", wrong: ["heavier", "heavyest"], icon: '🐘' },
-    { type: 'maze', id: 'm3', question: "What is the opposite of 'dark'?", trans: "ما هو عكس كلمة (dark) ظلام؟", correct: "light", wrong: ["black", "night"], icon: '🌙' },
-    { type: 'maze', id: 'm4', question: "What is the past tense of 'invent'?", trans: "ما هو الماضي من كلمة (invent) يخترع؟", correct: "invented", wrong: ["invents", "inventing"], icon: '💡' },
-    { type: 'maze', id: 'm5', question: "What is the plural of 'bee'?", trans: "ما هو جمع كلمة (bee) نحلة؟", correct: "bees", wrong: ["beees", "beez"], icon: '🐝' },
+    { type: 'choose_and_use', id: 'cu5', title: "Choose the correct word then use it in a meaningful sentence.", trans: "اختر الكلمة الصحيحة ثم استخدمها في جملة مفيدة.", icon: '🌙', choices: ['light', 'dark', 'bright'], correctChoice: 'dark', targetWord: 'dark', sentenceTemplate: 'Some _______ can glow in the dark.', sentenceChoices: ['crayons', 'toasters', 'books'], sentenceAnswer: 'crayons', sentenceTranslit: 'سام ___ كان جلو إن ذا دارك.', sentenceChoicesPr: ['كرايونز', 'توسترز', 'بوكس'], choicesPr: ['لايت', 'دارك', 'برايت'] },
+    { type: 'sentence_builder', id: 'sb-inv', trans: 'الألوان الشمعية والمحمصة من أشهر الاختراعات', context: '💡 Use the word "inventions" — رتّب الجملة!', words: [{w:"Crayons",t:"كرايونز"},{w:"and",t:"أند"},{w:"toasters",t:"توسترز"},{w:"are",t:"آر"},{w:"famous",t:"فيموس"},{w:"inventions.",t:"إنفينشونز"}], icon: '💡' },
+    
+    // --- Fill in the Blanks with Word Bank ---
+    {
+        type: 'fill_blanks',
+        id: 'fb1',
+        title: "Fill in the blanks with the correct word.",
+        trans: "املأ الفراغات بالكلمة الصحيحة من الصندوق.",
+        words: ['inventions', 'different', 'popped', 'burnt', 'cents'],
+        wordsAr: ['اختراعات', 'مختلفة', 'طارت', 'محترقة', 'سنت'],
+        sentences: [
+            { text: "The cookies were in the oven too long, so they _________.", correct: "burnt",      ar: "الكعكات بقيت في الفرن طويلاً فاحترقت." },
+            { text: "You can play the game in _________ ways.",                  correct: "different",  ar: "يمكنك لعب اللعبة بطرق مختلفة." },
+            { text: "My grandma gives me five _________ every day to buy candy.", correct: "cents",    ar: "جدتي تعطيني خمسة سنت يومياً لأشتري حلوى." },
+            { text: "The computer is one of the most important _________ in our life.", correct: "inventions", ar: "الكمبيوتر من أهم الاختراعات في حياتنا." }
+        ]
+    },
+    {
+        type: 'fill_blanks',
+        id: 'fb2',
+        title: "Fill in the blanks with the correct word.",
+        trans: "املأ الفراغات بالكلمة الصحيحة من الصندوق.",
+        words: ['toaster', 'popped', 'sides', 'heated', 'ready'],
+        wordsAr: ['محمصة', 'طارت', 'جانبان', 'سخّنت', 'جاهز'],
+        sentences: [
+            { text: "The modern _________ was invented in 1926.", correct: "toaster", ar: "تم اختراع المحمصة الحديثة عام 1926." },
+            { text: "It _________ both sides of the bread.",       correct: "heated",  ar: "كانت تسخّن كلا جانبي الخبز." },
+            { text: "Then it _________ the toast out.",             correct: "popped",  ar: "ثم أخرجت الخبز المحمص للخارج." },
+            { text: "The toast was _________ to eat!",              correct: "ready",   ar: "كان الخبز المحمص جاهزاً للأكل!" }
+        ]
+    },
+    {
+        type: 'fill_blanks',
+        id: 'fb3',
+        title: "Fill in the blanks with the correct word.",
+        trans: "املأ الفراغات بالكلمة الصحيحة من الصندوق.",
+        words: ['dark', 'smell', 'wash', 'colors', 'write'],
+        wordsAr: ['ظلام', 'تشم', 'تغسل', 'ألوان', 'تكتب'],
+        sentences: [
+            { text: "Today, you can get crayons that you can see in the _________.", correct: "dark",  ar: "اليوم يمكنك الحصول على ألوان شمعية تراها في الظلام." },
+            { text: "Some crayons _________ like fruit.",                           correct: "smell", ar: "بعض الألوان الشمعية برائحة الفواكه." },
+            { text: "There are crayons that you can use to _________ on a wall.",   correct: "write", ar: "هناك ألوان شمعية تستخدمها للكتابة على الجدار." },
+            { text: "Then you can _________ them off!",                             correct: "wash",  ar: "ثم يمكنك غسلها عن الجدار!" }
+        ]
+    },
+
+    // --- Choose and Use ---
+    {
+        type: 'choose_and_use',
+        id: 'cu1',
+        title: "Choose the correct word then use it in a meaningful sentence.",
+        trans: "اختر الكلمة الصحيحة ثم استخدمها في جملة مفيدة.",
+        img: 'assets/images/crayons.png',
+        choices: ['toothbrush', 'crayons', 'soap'],
+        correctChoice: 'crayons',
+        targetWord: 'crayons',
+        sentenceTemplate: 'I use the crayons to _______ my pictures.',
+        sentenceChoices: ['color', 'eat', 'fix'],
+        sentenceAnswer: 'color',
+        sentenceTranslit: 'آي يوز ذا كرايونز تو ___ ماي بيكشِرز.',
+        sentenceChoicesPr: ['كالِر', 'إيت', 'فيكس'],
+        choicesPr: ['توث براش', 'كرايونز', 'صوب']
+    },
+    {
+        type: 'choose_and_use',
+        id: 'cu2',
+        title: "Choose the correct word then use it in a meaningful sentence.",
+        trans: "اختر الكلمة الصحيحة ثم استخدمها في جملة مفيدة.",
+        img: 'assets/images/toaster.png',
+        choices: ['stove', 'toaster', 'fridge'],
+        correctChoice: 'toaster',
+        targetWord: 'toaster',
+        sentenceTemplate: 'The toaster _______ both sides of the bread.',
+        sentenceChoices: ['heated', 'washed', 'broke'],
+        sentenceAnswer: 'heated',
+        sentenceTranslit: 'ذا توستر ___ بوث سايدز أوف ذا بريد.',
+        sentenceChoicesPr: ['هيتيد', 'ووشت', 'بروك'],
+        choicesPr: ['ستوف', 'توستر', 'فريج']
+    },
+    {
+        type: 'choose_and_use',
+        id: 'cu3',
+        title: "Choose the correct word then use it in a meaningful sentence.",
+        trans: "اختر الكلمة الصحيحة ثم استخدمها في جملة مفيدة.",
+        img: 'assets/images/telescope.png',
+        choices: ['microscope', 'camera', 'telescope'],
+        correctChoice: 'telescope',
+        targetWord: 'telescope',
+        sentenceTemplate: 'The telescope helps us _______ the stars.',
+        sentenceChoices: ['see', 'eat', 'wash'],
+        sentenceAnswer: 'see',
+        sentenceTranslit: 'ذا تيلسكوب هيلبس أس ___ ذا ستارز.',
+        sentenceChoicesPr: ['سي', 'إيت', 'ووش'],
+        choicesPr: ['مايكروسكوب', 'كاميرا', 'تيلسكوب']
+    },
+    {
+        type: 'choose_and_use',
+        id: 'cu4',
+        title: "Choose the correct word then use it in a meaningful sentence.",
+        trans: "اختر الكلمة الصحيحة ثم استخدمها في جملة مفيدة.",
+        img: 'assets/images/cotton_candy.png',
+        choices: ['cotton candy', 'chocolate', 'popcorn'],
+        correctChoice: 'cotton candy',
+        targetWord: 'cotton candy',
+        sentenceTemplate: 'Cotton candy is a sweet and _______ food.',
+        sentenceChoices: ['light', 'heavy', 'spicy'],
+        sentenceAnswer: 'light',
+        sentenceTranslit: 'كوتون كاندي إز أ سويت أند ___ فود.',
+        sentenceChoicesPr: ['لايت', 'هيفي', 'سبايسي'],
+        choicesPr: ['كوتون كاندي', 'تشوكليت', 'بوبكورن']
+    },
+
+    // --- Grammar Find ---
+    {
+        type: 'grammar_find',
+        id: 'gf1',
+        title: "Find from the passages:",
+        trans: "استخرج من النصوص ما يلي:",
+        prompts: [
+            { label: "A singular noun (اسم مفرد)", key: "singular_noun", answers: ['box', 'toaster', 'dark', 'wall', 'game', 'computer', 'life', 'grandma', 'candy', 'oven', 'bread', 'butter', 'invention', 'chef', 'food', 'car', 'dog', 'ball', 'vet', 'bee', 'van', 'telescope', 'printing press', 'chewing gum', 'cotton candy'] },
+            { label: "A past regular verb (فعل ماضٍ منتظم)", key: "regular_verb", answers: ['invented', 'heated', 'popped', 'turned', 'played', 'helped', 'prepared'] },
+            { label: "A color word (كلمة لون)", key: "color_word", answers: ['black', 'brown', 'blue', 'red', 'purple', 'orange', 'yellow', 'green'] },
+            { label: "An irregular past verb (فعل ماضٍ شاذ)", key: "irregular_verb", answers: ['cost', 'was', 'had', 'got', 'burnt', 'were', 'saw', 'gave', 'made'] },
+            { label: "A plural noun (اسم جمع)", key: "plural_noun", answers: ['crayons', 'kinds', 'colors', 'inventions', 'ways', 'cents', 'cookies', 'sides', 'bees', 'animals', 'seeds', 'pictures'] }
+        ]
+    },
+    {
+        type: 'grammar_find',
+        id: 'gf2',
+        title: "Find parts of speech:",
+        trans: "استخرج أقسام الكلام التالية من معلوماتك والنصوص:",
+        prompts: [
+            { label: "A verb in present tense (فعل مضارع)", key: "present_verb", answers: ['cost', 'play', 'gives', 'buy', 'is', 'are', 'see', 'smell', 'change', 'write', 'wash', 'like', 'helps', 'plants', 'put', 'can', 'get', 'has', 'have'] },
+            { label: "A compound word or two words (كلمة مركبة)", key: "compound_word", answers: ['cotton candy', 'chewing gum', 'printing press'] },
+            { label: "An adjective (صفة)", key: "adjective", answers: ['first', 'different', 'dark', 'favorite', 'modern', 'ready', 'delicious', 'hot', 'sick', 'important', 'sweet', 'dangerous', 'fabulous', 'brave', 'red', 'new', 'young', 'old'] },
+            { label: "A preposition (حرف جر)", key: "preposition", answers: ['in', 'to', 'with', 'before', 'like', 'on', 'off', 'for', 'at', 'from', 'of', 'by', 'under', 'over', 'about', 'through', 'into'] },
+            { label: "A pronoun (ضمير)", key: "pronoun", answers: ['you', 'i', 'it', 'my', 'me', 'our', 'they', 'them', 'which', 'your', 'she', 'he', 'we', 'us', 'him', 'her', 'their', 'this', 'that'] }
+        ]
+    },
 
     // --- Sentence Builder Screens ---
-    { type: 'sentence_builder', id: 's1', words: [{w: "you", t: "يو"}, {w: "can", t: "كان"}, {w: "get", t: "جيت"}, {w: "crayons", t: "كرايونز"}], img: 'assets/images/crayons.png' },
-    { type: 'sentence_builder', id: 's2', words: [{w: "I", t: "آي"}, {w: "use", t: "يوز"}, {w: "crayons", t: "كرايونز"}, {w: "to", t: "تو"}, {w: "draw", t: "درو"}], img: 'assets/images/crayons.png' },
-    { type: 'sentence_builder', id: 's3', words: [{w: "the", t: "ذا"}, {w: "toaster", t: "توستر"}, {w: "is", t: "إز"}, {w: "very", t: "فيري"}, {w: "hot", t: "هوت"}], img: 'assets/images/toaster.png' },
-    { type: 'sentence_builder', id: 's4', words: [{w: "a", t: "أ"}, {w: "vet", t: "فيت"}, {w: "helps", t: "هيلبس"}, {w: "sick", t: "سيك"}, {w: "animals", t: "أنيمالز"}], icon: '🧑‍⚕️' },
-    { type: 'sentence_builder', id: 's5', words: [{w: "toast", t: "توست"}, {w: "with", t: "ويث"}, {w: "butter", t: "باتر"}, {w: "is", t: "إز"}, {w: "delicious", t: "ديليشوس"}], img: 'assets/images/toaster.png' },
-    { type: 'sentence_builder', id: 's6', words: [{w: "I", t: "آي"}, {w: "like", t: "لايك"}, {w: "cotton", t: "كوتون"}, {w: "candy", t: "كاندي"}], img: 'assets/images/cotton_candy.png' },
+    { type: 'sentence_builder', id: 's1', trans: 'يمكنك الحصول على ألوان شمعية', words: [{w: "you", t: "يو"}, {w: "can", t: "كان"}, {w: "get", t: "جيت"}, {w: "crayons", t: "كرايونز"}], img: 'assets/images/crayons.png' },
+    { type: 'sentence_builder', id: 's2', trans: 'أستخدم الألوان الشمعية للرسم', words: [{w: "I", t: "آي"}, {w: "use", t: "يوز"}, {w: "crayons", t: "كرايونز"}, {w: "to", t: "تو"}, {w: "draw", t: "درو"}], img: 'assets/images/crayons.png' },
+    { type: 'sentence_builder', id: 's3', trans: 'المحمصة ساخنة جداً', words: [{w: "the", t: "ذا"}, {w: "toaster", t: "توستر"}, {w: "is", t: "إز"}, {w: "very", t: "فيري"}, {w: "hot", t: "هوت"}], img: 'assets/images/toaster.png' },
+    { type: 'sentence_builder', id: 's4', trans: 'الطبيب البيطري يساعد الحيوانات المريضة', words: [{w: "a", t: "أ"}, {w: "vet", t: "فيت"}, {w: "helps", t: "هيلبس"}, {w: "sick", t: "سيك"}, {w: "animals", t: "أنيمالز"}], icon: '🧑‍⚕️' },
+    { type: 'sentence_builder', id: 's5', trans: 'الخبز المحمص مع الزبدة لذيذ', words: [{w: "toast", t: "توست"}, {w: "with", t: "ويث"}, {w: "butter", t: "باتر"}, {w: "is", t: "إز"}, {w: "delicious", t: "ديليشوس"}], img: 'assets/images/toaster.png' },
+    { type: 'sentence_builder', id: 's6', trans: 'أحب غزل البنات', words: [{w: "I", t: "آي"}, {w: "like", t: "لايك"}, {w: "cotton", t: "كوتون"}, {w: "candy", t: "كاندي"}], img: 'assets/images/cotton_candy.png' },
 
     // --- Spelling Tiles ---
     { type: 'spelling_tiles', id: 'sp1', word: 'ball', trans: 'بول (كرة)', icon: '🏐' },
@@ -100,15 +234,6 @@ const screensData = [
     { type: 'word_blocks', id: 'wb7', word: 'fix', trans: 'يصلح (فيكس)', icon: '🛠️' },
     { type: 'word_blocks', id: 'wb8', word: 'toast', trans: 'خبز محمص (توست)', img: 'assets/images/toaster.png' },
 
-    // --- Word Wheel (عجلة الكلمات) ---
-    { type: 'word_wheel', id: 'ww1', prefixOptions: ['b', 'v', 'f', 'p', 'm'], correctPrefix: 'v', suffix: 'an', fullWord: 'van', trans: 'شاحنة (فان)', icon: '🚐' },
-    { type: 'word_wheel', id: 'ww2', prefixOptions: ['f', 'b', 'v', 's', 't'], correctPrefix: 'b', suffix: 'all', fullWord: 'ball', trans: 'كرة (بول)', icon: '🏐' },
-    { type: 'word_wheel', id: 'ww3', prefixOptions: ['v', 'f', 'b', 'c', 'h'], correctPrefix: 'f', suffix: 'ire', fullWord: 'fire', trans: 'نار (فاير)', icon: '🔥' },
-    { type: 'word_wheel', id: 'ww4', prefixOptions: ['b', 'v', 'f', 'r', 'l'], correctPrefix: 'v', suffix: 'et', fullWord: 'vet', trans: 'بيطري (فيت)', icon: '🧑‍⚕️' },
-    { type: 'word_wheel', id: 'ww5', prefixOptions: ['f', 'v', 'b', 's', 'm'], correctPrefix: 'f', suffix: 'ix', fullWord: 'fix', trans: 'يصلح (فيكس)', icon: '🛠️' },
-    { type: 'word_wheel', id: 'ww6', prefixOptions: ['b', 'v', 'f', 't', 'p'], correctPrefix: 'b', suffix: 'ee', fullWord: 'bee', trans: 'نحلة (بي)', icon: '🐝' },
-    { type: 'word_wheel', id: 'ww7', prefixOptions: ['b', 'v', 'f', 'd', 'p'], correctPrefix: 'b', suffix: 'ounce', fullWord: 'bounce', trans: 'يرتد (باونس)', icon: '🏀' },
-    { type: 'word_wheel', id: 'ww8', prefixOptions: ['f', 'v', 'b', 'c', 't'], correctPrefix: 'f', suffix: 'armer', fullWord: 'farmer', trans: 'مزارع (فارمر)', icon: '🧑‍🌾' },
 
     // --- True / False ---
     { type: 'true_false', id: 'tf1', text: "Crayons were invented in 2020.", trans: "تم اختراع الألوان الشمعية عام 2020.", answer: false, img: 'assets/images/crayons.png' },
@@ -116,49 +241,89 @@ const screensData = [
     { type: 'true_false', id: 'tf3', text: "A toaster heats both sides of the bread.", trans: "المحمصة تسخن جانبي الخبز.", answer: true, img: 'assets/images/toaster.png' },
     { type: 'true_false', id: 'tf4', text: "Before the toaster, people heated one side at a time.", trans: "قبل المحمصة، كان الناس يسخنون جانباً واحداً في كل مرة.", answer: true, img: 'assets/images/toaster.png' },
 
-    // --- Circle Sorting (عجلة الفرز) ---
-    { type: 'circle_sorting', id: 'cs1', centerText: 'B b', correct: ['ball', 'bee', 'bounce', 'boy'], wrong: ['van', 'fire'], trans: 'استخرج الكلمات التي تبدأ بحرف B' },
-    { type: 'circle_sorting', id: 'cs2', centerText: 'V v', correct: ['van', 'vet', 'viper', 'very'], wrong: ['fix', 'bee'], trans: 'استخرج الكلمات التي تبدأ بحرف V' },
-    { type: 'circle_sorting', id: 'cs3', centerText: 'F f', correct: ['fire', 'fix', 'farmer', 'food'], wrong: ['ball', 'vet'], trans: 'استخرج الكلمات التي تبدأ بحرف F' },
 
     // --- Window Wheel (عجلة النافذة السحرية) ---
-    { type: 'window_wheel', id: 'win1', centerText: 'Vv', targetWord: 'van', allWords: ['ball', 'bee', 'van', 'fire', 'fix'], icon: '🚐', trans: 'أدر النافذة لتجد الكلمة المطابقة للصورة' },
-    { type: 'window_wheel', id: 'win2', centerText: 'Ff', targetWord: 'fire', allWords: ['van', 'fire', 'ball', 'vet', 'bounce'], icon: '🔥', trans: 'أدر النافذة لتجد الكلمة المطابقة للصورة' },
-    { type: 'window_wheel', id: 'win3', centerText: 'Bb', targetWord: 'bee', allWords: ['fix', 'vet', 'van', 'bee', 'fire'], icon: '🐝', trans: 'أدر النافذة لتجد الكلمة المطابقة للصورة' },
+    { type: 'window_wheel', id: 'win1', centerText: 'Vv', targetWord: 'van',  allWords: ['ball','bee','van','fire','fix'],     allWordsAr: ['كرة','نحلة','شاحنة','نار','يصلح'],   icon: '🚐', trans: 'أدر النافذة لتجد الكلمة المطابقة للصورة' },
+    { type: 'window_wheel', id: 'win2', centerText: 'Ff', targetWord: 'fire', allWords: ['van','fire','ball','vet','bounce'],   allWordsAr: ['شاحنة','نار','كرة','بيطري','يرتد'], icon: '🔥', trans: 'أدر النافذة لتجد الكلمة المطابقة للصورة' },
+    { type: 'window_wheel', id: 'win3', centerText: 'Bb', targetWord: 'bee',  allWords: ['fix','vet','van','bee','fire'],       allWordsAr: ['يصلح','بيطري','شاحنة','نحلة','نار'], icon: '🐝', trans: 'أدر النافذة لتجد الكلمة المطابقة للصورة' },
 
     // --- Drag & Drop (Nouns & Verbs) - Page 59 ---
-    { 
+    {
         type: 'drag_drop', id: 'dd1', title: "Nouns & Verbs (Page 59)", trans: "صنف الكلمات إلى اسم (Noun) وفعل (Verb)", icon: '🗂️',
         baskets: [{ id: 'noun', title: 'Noun (اسم)' }, { id: 'verb', title: 'Verb (فعل)' }],
-        items: [{ word: 'inventor', target: 'noun' }, { word: 'heat', target: 'verb' }, { word: 'crayons', target: 'noun' }, { word: 'wash', target: 'verb' }, { word: 'farmer', target: 'noun' }, { word: 'fix', target: 'verb' }]
+        items: [
+            { word: 'inventor', target: 'noun', ar: 'مخترع' },
+            { word: 'heat',     target: 'verb', ar: 'يُسخّن' },
+            { word: 'crayons',  target: 'noun', ar: 'ألوان شمعية' },
+            { word: 'wash',     target: 'verb', ar: 'يغسل' },
+            { word: 'farmer',   target: 'noun', ar: 'مزارع' },
+            { word: 'fix',      target: 'verb', ar: 'يُصلح' }
+        ]
     },
-    { 
+    {
         type: 'drag_drop', id: 'dd2', title: "Nouns & Verbs (Page 59)", trans: "صنف الكلمات إلى اسم (Noun) وفعل (Verb)", icon: '🗂️',
         baskets: [{ id: 'noun', title: 'Noun (اسم)' }, { id: 'verb', title: 'Verb (فعل)' }],
-        items: [{ word: 'telescope', target: 'noun' }, { word: 'invent', target: 'verb' }, { word: 'fire', target: 'noun' }, { word: 'bounce', target: 'verb' }, { word: 'vet', target: 'noun' }, { word: 'help', target: 'verb' }]
+        items: [
+            { word: 'telescope', target: 'noun', ar: 'تلسكوب' },
+            { word: 'invent',    target: 'verb', ar: 'يخترع' },
+            { word: 'fire',      target: 'noun', ar: 'نار' },
+            { word: 'bounce',    target: 'verb', ar: 'يرتد' },
+            { word: 'vet',       target: 'noun', ar: 'بيطري' },
+            { word: 'help',      target: 'verb', ar: 'يساعد' }
+        ]
     },
-    { 
+    {
         type: 'drag_drop', id: 'dd3', title: "Nouns & Verbs (Page 59)", trans: "صنف الكلمات إلى اسم (Noun) وفعل (Verb)", icon: '🗂️',
         baskets: [{ id: 'noun', title: 'Noun (اسم)' }, { id: 'verb', title: 'Verb (فعل)' }],
-        items: [{ word: 'toaster', target: 'noun' }, { word: 'see', target: 'verb' }, { word: 'van', target: 'noun' }, { word: 'smell', target: 'verb' }, { word: 'food', target: 'noun' }, { word: 'put', target: 'verb' }]
+        items: [
+            { word: 'toaster', target: 'noun', ar: 'محمصة' },
+            { word: 'see',     target: 'verb', ar: 'يرى' },
+            { word: 'van',     target: 'noun', ar: 'شاحنة' },
+            { word: 'smell',   target: 'verb', ar: 'يشم' },
+            { word: 'food',    target: 'noun', ar: 'طعام' },
+            { word: 'put',     target: 'verb', ar: 'يضع' }
+        ]
     }
 ];
 
-let shuffledScreens = [...readingScreens];
-// Slice 50 to get exactly 50 random screens
-let randomQuestions = [...screensData].sort(() => Math.random() - 0.5).slice(0, 50);
-shuffledScreens.push(...randomQuestions);
+// Group questions by type
+let typesMap = {};
+screensData.forEach(q => {
+    if (!typesMap[q.type]) typesMap[q.type] = [];
+    typesMap[q.type].push(q);
+});
+
+// Shuffle within each type — different order every session
+for (let type in typesMap) {
+    typesMap[type] = typesMap[type].sort(() => Math.random() - 0.5);
+}
+
+let typeKeys = Object.keys(typesMap);
+let interleavedQuestions = [];
+
+// Round-robin cycling: one question per type per round.
+// Uses modular index (round % arr.length) so shorter types cycle back
+// instead of stopping — guarantees exactly 75 questions.
+const maxRounds = Math.ceil(75 / typeKeys.length) + 2;
+outer:
+for (let round = 0; round < maxRounds; round++) {
+    for (let typeKey of typeKeys) {
+        if (interleavedQuestions.length >= 75) break outer;
+        const arr = typesMap[typeKey];
+        interleavedQuestions.push(arr[round % arr.length]);
+    }
+}
+
+let shuffledScreens = [...readingScreens, ...interleavedQuestions];
 
 let currentScreenIndex = 0;
 let score = 0;
 let errorsCount = 0;
+let answeredSet = new Set(); // tracks indices already scored — prevents double-scoring on Back
 
-let maxScore = 0;
-randomQuestions.forEach(q => {
-    maxScore += 1;
-});
+let maxScore = interleavedQuestions.length;
 
-let timeLeft = 50 * 60; // 50 minutes for 50 questions
+let timeLeft = 75 * 60; // 75 minutes for 75 questions
 let timerInterval;
 
 const scoreEl = document.getElementById('score');
@@ -168,6 +333,7 @@ const timerEl = document.getElementById('timer');
 const timerBoard = document.querySelector('.timer-board');
 const startBtn = document.getElementById('start-btn');
 const helperControls = document.getElementById('helper-controls');
+const backBtn = document.getElementById('back-btn');
 const showAnswerBtn = document.getElementById('show-answer-btn');
 const skipBtn = document.getElementById('skip-btn');
 const dynamicContent = document.getElementById('dynamic-content');
@@ -288,8 +454,10 @@ function endGame() {
 
 let hintCurrentScreen = null;
 
-function loadNextScreen() {
-    updateProgress();
+function loadNextScreen(isReload = false) {
+    hintCurrentScreen = null;
+    showAnswerBtn.onclick = null;
+    if (!isReload) updateProgress();
     if (currentScreenIndex >= shuffledScreens.length) { endGame(); return; }
 
     const screenData = shuffledScreens[currentScreenIndex];
@@ -300,6 +468,7 @@ function loadNextScreen() {
     dynamicContent.style.animation = 'fadeIn 0.5s ease-out';
     showAnswerBtn.disabled = false;
     skipBtn.disabled = false;
+    backBtn.disabled = currentScreenIndex <= 0;
     
     showAnswerBtn.style.display = 'block';
     skipBtn.innerHTML = '⏭ Skip';
@@ -308,23 +477,27 @@ function loadNextScreen() {
     switch(screenData.type) {
         case 'reading_passage': renderReadingPassage(screenData); break;
         case 'bubble_pop': renderBubblePop(screenData); break;
-        case 'maze': renderMaze(screenData); break;
         case 'true_false': renderTrueFalse(screenData); break;
         case 'sentence_builder': renderSentenceBuilder(screenData); break;
         case 'spelling_tiles': renderSpellingTiles(screenData); break;
         case 'pop_it_spelling': renderPopItSpelling(screenData); break;
         case 'word_blocks': renderWordBlocks(screenData); break;
-        case 'word_wheel': renderWordWheel(screenData); break;
-        case 'circle_sorting': renderCircleSorting(screenData); break;
         case 'window_wheel': renderWindowWheel(screenData); break;
         case 'drag_drop': renderDragDrop(screenData); break;
+        case 'typing': renderTyping(screenData); break;
+        case 'fill_blanks': renderFillBlanks(screenData); break;
+        case 'choose_and_use': renderChooseAndUse(screenData); break;
+        case 'grammar_find': renderGrammarFind(screenData); break;
     }
 }
 
 function processItemAnswer(isCorrect, elementToShake = null) {
     if (isCorrect) {
         playSound('success');
-        addScore(1);
+        if (!answeredSet.has(currentScreenIndex)) {
+            addScore(1);
+            answeredSet.add(currentScreenIndex);
+        }
         updateProgress();
         showAnswerBtn.disabled = true;
         skipBtn.disabled = true;
@@ -337,6 +510,75 @@ function processItemAnswer(isCorrect, elementToShake = null) {
             setTimeout(() => elementToShake.classList.remove('shake'), 400);
         }
     }
+}
+
+function renderTyping(data) {
+    dynamicContent.innerHTML = `
+        <div class="typing-container">
+            ${data.img ? `<img src="${data.img}" alt="img" style="max-height: 150px;">` : ''}
+            ${data.icon ? `<div style="font-size: 4rem;">${data.icon}</div>` : ''}
+            <div class="typing-question">
+                ${data.question}
+                <span class="transliteration">${data.trans}</span>
+            </div>
+            <div class="typing-input-wrapper">
+                <input type="text" id="typing-input" class="typing-input" placeholder="Type here / اكتب هنا..." autocomplete="off">
+                <button class="btn primary-btn typing-check-btn" id="typing-check">Check Answer ✔️</button>
+            </div>
+        </div>
+    `;
+
+    const inputEl = document.getElementById('typing-input');
+    const checkBtn = document.getElementById('typing-check');
+
+    setTimeout(() => inputEl.focus(), 100);
+
+    inputEl.addEventListener('keyup', function(e) {
+        if (e.key === 'Enter') {
+            checkBtn.click();
+        }
+    });
+
+    checkBtn.addEventListener('click', () => {
+        const val = inputEl.value.trim().toLowerCase();
+        if (val === '') return;
+        
+        const isCorrect = data.containsCheck ? data.answers.some(ans => val.includes(ans.toLowerCase())) : data.answers.some(ans => ans.toLowerCase() === val);
+        
+        if (isCorrect) {
+            inputEl.style.borderColor = 'var(--success)';
+            inputEl.style.backgroundColor = '#e8f8f5';
+            inputEl.disabled = true;
+            checkBtn.disabled = true;
+            processItemAnswer(true);
+            setTimeout(() => {
+                currentScreenIndex++;
+                loadNextScreen();
+            }, 1000);
+        } else {
+            inputEl.classList.add('error');
+            setTimeout(() => inputEl.classList.remove('error'), 400);
+            processItemAnswer(false);
+            inputEl.value = '';
+            inputEl.focus();
+        }
+    });
+
+    showAnswerBtn.onclick = () => {
+        inputEl.value = data.answers[0]; 
+        inputEl.style.borderColor = 'var(--success)';
+        inputEl.style.backgroundColor = '#e8f8f5';
+        inputEl.disabled = true;
+        checkBtn.disabled = true;
+        setTimeout(() => {
+            loadNextScreen(true);
+        }, 2000);
+    };
+
+    skipBtn.onclick = () => {
+        currentScreenIndex++;
+        loadNextScreen();
+    };
 }
 
 // =======================
@@ -528,132 +770,6 @@ function renderWordBlocks(q) {
     };
 }
 
-function renderWordWheel(q) {
-    let visualHtml = q.img ? `<img src="${q.img}" style="width: 100px; height: 100px; object-fit: cover; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">` : `<div style="font-size: 5rem;">${q.icon}</div>`;
-    
-    const lettersCount = q.prefixOptions.length;
-    const angleStep = 360 / lettersCount;
-    
-    let lettersHtml = q.prefixOptions.map((letter, i) => {
-        let angle = i * angleStep;
-        return `<div class="wheel-letter" style="transform: rotate(${angle}deg);">
-                    <div class="wheel-letter-inner" data-angle="${angle}">${letter}</div>
-                </div>`;
-    }).join('');
-
-    const html = `
-        <h2>Word Wheel</h2>
-        <p>لف العجلة لاختيار الحرف الأول الصحيح!</p>
-        <div class="spelling-container" style="margin-top: 10px;">
-            <div style="display: flex; gap: 15px; align-items: center; margin-bottom: 10px;">
-                ${visualHtml}
-                <button class="speak-btn" id="ww-speak" style="width: 50px; height: 50px; font-size: 1.5rem;">🔊</button>
-            </div>
-            <div class="question-box" style="margin: 0; padding: 10px 20px;">${q.trans}</div>
-        </div>
-        
-        <div class="wheel-game-wrapper" id="ww-wrapper">
-            <div class="wheel-container">
-                <div class="wheel" id="main-wheel" data-rotation="0">
-                    <div class="wheel-center"></div>
-                    ${lettersHtml}
-                </div>
-                <div class="wheel-pointer">▶</div>
-            </div>
-            <div class="wheel-suffix">${q.suffix}</div>
-        </div>
-        
-        <div class="wheel-controls">
-            <button class="wheel-btn" id="ww-left">🔄</button>
-            <button class="wheel-btn" id="ww-right">🔃</button>
-        </div>
-        <button class="btn check-btn" id="ww-check" style="margin-top: 20px;">Check Answer ✔️</button>
-    `;
-    dynamicContent.innerHTML = html;
-    
-    document.getElementById('ww-speak').onclick = function() { toggleTTS(q.fullWord, this); };
-
-    let currentRotation = 0;
-    const wheelEl = document.getElementById('main-wheel');
-    let solved = false;
-    
-    function updateLettersRotation() {
-        // Counter rotate inner letters so they always appear straight
-        document.querySelectorAll('.wheel-letter-inner').forEach(inner => {
-            let angle = parseFloat(inner.dataset.angle);
-            inner.style.transform = `rotate(${-(angle + currentRotation)}deg)`;
-        });
-    }
-    
-    // Initial upright rotation
-    updateLettersRotation();
-
-    // Fix for the center rotation: it's now perfectly centered because the wheel-letter is full size.
-    document.getElementById('ww-left').onclick = () => {
-        if(solved) return;
-        currentRotation -= angleStep;
-        wheelEl.style.transform = `rotate(${currentRotation}deg)`;
-        updateLettersRotation();
-    };
-    document.getElementById('ww-right').onclick = () => {
-        if(solved) return;
-        currentRotation += angleStep;
-        wheelEl.style.transform = `rotate(${currentRotation}deg)`;
-        updateLettersRotation();
-    };
-
-    const checkBtn = document.getElementById('ww-check');
-    checkBtn.onclick = () => {
-        if(solved) return;
-        
-        let targetA = (90 - currentRotation) % 360;
-        if(targetA < 0) targetA += 360;
-        
-        let closestDist = 999;
-        let selectedLetter = '';
-        
-        q.prefixOptions.forEach((letter, i) => {
-            let angle = i * angleStep;
-            let dist = Math.abs(angle - targetA);
-            if(dist > 180) dist = 360 - dist;
-            if(dist < closestDist) {
-                closestDist = dist;
-                selectedLetter = letter;
-            }
-        });
-
-        if (selectedLetter === q.correctPrefix) {
-            solved = true;
-            checkBtn.style.display = 'none';
-            wheelEl.style.borderColor = 'var(--success)';
-            document.querySelector('.wheel-suffix').style.color = 'var(--success)';
-            processItemAnswer(true);
-        } else {
-            processItemAnswer(false, document.getElementById('ww-wrapper'));
-        }
-    };
-
-    hintCurrentScreen = () => {
-        if(solved) return;
-        showAnswerBtn.disabled = true;
-        let oldRotation = currentRotation;
-        let targetIndex = q.prefixOptions.indexOf(q.correctPrefix);
-        let targetA = targetIndex * angleStep;
-        currentRotation = 90 - targetA;
-        wheelEl.style.transform = `rotate(${currentRotation}deg)`;
-        updateLettersRotation();
-        wheelEl.style.borderColor = '#f1c40f';
-        
-        setTimeout(() => {
-            if(solved) return;
-            currentRotation = oldRotation;
-            wheelEl.style.transform = `rotate(${currentRotation}deg)`;
-            updateLettersRotation();
-            wheelEl.style.borderColor = 'var(--primary)';
-            showAnswerBtn.disabled = false;
-        }, 2000);
-    };
-}
 
 function renderPopItSpelling(q) {
     let visualHtml = q.img ? `<img src="${q.img}" style="width: 100px; height: 100px; object-fit: cover; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">` : `<div style="font-size: 5rem;">${q.icon}</div>`;
@@ -663,7 +779,7 @@ function renderPopItSpelling(q) {
     
     const html = `
         <h2>Pop It Spelling Game</h2>
-        <p>Pop the letters in the correct order!</p>
+        <p>Pop the letters in the correct order! <span class="transliteration">فقع الحروف بالترتيب الصحيح</span></p>
         <div class="spelling-container" style="margin-top: 10px;">
             <div style="display: flex; gap: 15px; align-items: center; margin-bottom: 10px;">
                 ${visualHtml}
@@ -720,7 +836,7 @@ function renderBubblePop(q) {
     
     const html = `
         <h2>Missing Letters</h2>
-        <p>Pop the bubble with the missing letter!</p>
+        <p>Pop the bubble with the missing letter! <span class="transliteration">انقر الفقاعة التي تحتوي على الحرف الناقص</span></p>
         <div style="display:flex; flex-direction:column; align-items:center;">
             ${visualHtml}
             <div class="question-box" id="qbox" style="margin-top: 0;">${q.sentence}<span class="transliteration">${q.trans}</span></div>
@@ -759,7 +875,7 @@ function renderTrueFalse(q) {
     let visualHtml = q.img ? `<img src="${q.img}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 10px; margin-bottom: 10px;">` : (q.icon ? `<div style="font-size: 4rem; margin-bottom: 10px;">${q.icon}</div>` : '');
     const html = `
         <h2>True or False?</h2>
-        <p>Is this sentence True 🟢 or False 🔴?</p>
+        <p>Is this sentence True 🟢 or False 🔴? <span class="transliteration">هل هذه الجملة صحيحة أم خاطئة؟</span></p>
         <div style="display:flex; flex-direction:column; align-items:center;">
             ${visualHtml}
             <div class="question-box" id="tfbox" style="margin-top: 0;">${q.text}<span class="transliteration">${q.trans}</span></div>
@@ -797,7 +913,9 @@ function renderSentenceBuilder(q) {
     let visualHtml = q.img ? `<img src="${q.img}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 10px; margin-bottom: 10px;">` : (q.icon ? `<div style="font-size: 4rem; margin-bottom: 10px;">${q.icon}</div>` : '');
     const html = `
         <h2>Sentence Builder</h2>
-        <p>Click the words to arrange them into a correct sentence!</p>
+        <p>Click the words to arrange them into a correct sentence! <span class="transliteration">انقر الكلمات لترتيب الجملة الصحيحة</span></p>
+        ${q.context ? `<div class="sb-context-note">${q.context}</div>` : ''}
+        ${q.trans ? `<div class="transliteration" style="text-align:center; font-size:1rem; margin-bottom:8px;">🌐 ${q.trans}</div>` : ''}
         <div style="display:flex; flex-direction:column; align-items:center;">
             ${visualHtml}
         </div>
@@ -850,91 +968,13 @@ function renderSentenceBuilder(q) {
     };
 }
 
-function renderMaze(q) {
-    let visualHtml = q.img ? `<img src="${q.img}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 10px; margin-bottom: 5px;">` : (q.icon ? `<div style="font-size: 3rem; margin-bottom: 5px;">${q.icon}</div>` : '');
-    const html = `
-        <h2>Bee Maze! 🐝</h2>
-        <p>Help the bee find the correct answer!</p>
-        <div style="display:flex; flex-direction:column; align-items:center;">
-            ${visualHtml}
-            <div class="question-box" id="mazebox" style="margin-top: 0; padding: 5px 15px;">${q.question}<span class="transliteration">${q.trans}</span></div>
-        </div>
-        <div class="maze-container">
-            <div class="maze-grid" id="maze-grid"></div>
-            <div class="maze-controls">
-                <button class="maze-btn maze-up" id="btn-up">⬆️</button>
-                <button class="maze-btn maze-left" id="btn-left">⬅️</button>
-                <button class="maze-btn maze-down" id="btn-down">⬇️</button>
-                <button class="maze-btn maze-right" id="btn-right">➡️</button>
-            </div>
-        </div>
-    `;
-    dynamicContent.innerHTML = html;
-    const grid = document.getElementById('maze-grid'); const gridSize = 5;
-    const walls = ['1,0', '1,2', '2,2', '3,4', '4,1'];
-    const options = [q.correct, ...q.wrong].sort(() => Math.random() - 0.5);
-    const goalPositions = ['0,4', '4,0', '4,4']; const goals = {};
-    goalPositions.forEach((pos, i) => { if(options[i]) goals[pos] = options[i]; });
-    let beePos = { x: 0, y: 0 }; let solved = false;
-    for (let y = 0; y < gridSize; y++) {
-        for (let x = 0; x < gridSize; x++) {
-            const cell = document.createElement('div'); cell.classList.add('maze-cell'); cell.id = `cell-${x}-${y}`;
-            const posKey = `${x},${y}`;
-            if (walls.includes(posKey)) cell.classList.add('wall');
-            else if (goals[posKey]) cell.innerHTML = `🍯<br><span class="maze-word">${goals[posKey]}</span>`;
-            grid.appendChild(cell);
-        }
-    }
-    const drawBee = () => { document.querySelectorAll('.maze-bee').forEach(el => el.remove()); const cell = document.getElementById(`cell-${beePos.x}-${beePos.y}`); if(cell) { const bee = document.createElement('div'); bee.classList.add('maze-bee'); bee.innerText = '🐝'; bee.style.position = 'absolute'; cell.appendChild(bee); } };
-    drawBee();
-    const moveBee = (dx, dy) => {
-        if(solved) return;
-        const nx = beePos.x + dx; const ny = beePos.y + dy;
-        if (nx >= 0 && nx < gridSize && ny >= 0 && ny < gridSize) {
-            if (!walls.includes(`${nx},${ny}`)) {
-                beePos = { x: nx, y: ny }; drawBee();
-                const currentPosKey = `${nx},${ny}`;
-                if (goals[currentPosKey]) {
-                    if (goals[currentPosKey] === q.correct) { solved = true; document.getElementById(`cell-${nx}-${ny}`).style.background = 'var(--success)'; processItemAnswer(true); } 
-                    else { processItemAnswer(false, grid); beePos = { x: 0, y: 0 }; drawBee(); }
-                }
-            } else { grid.classList.add('shake'); setTimeout(() => grid.classList.remove('shake'), 300); }
-        }
-    };
-    document.getElementById('btn-up').onclick = () => moveBee(0, -1); document.getElementById('btn-down').onclick = () => moveBee(0, 1);
-    document.getElementById('btn-left').onclick = () => moveBee(-1, 0); document.getElementById('btn-right').onclick = () => moveBee(1, 0);
-    const keyHandler = (e) => {
-        if(solved) return;
-        if(e.key === 'ArrowUp') moveBee(0, -1); if(e.key === 'ArrowDown') moveBee(0, 1);
-        if(e.key === 'ArrowLeft') moveBee(-1, 0); if(e.key === 'ArrowRight') moveBee(1, 0);
-    };
-    document.addEventListener('keydown', keyHandler);
-    
-    hintCurrentScreen = () => {
-        if(solved) return;
-        showAnswerBtn.disabled = true;
-        let targetKey = null;
-        for (const [key, val] of Object.entries(goals)) { if (val === q.correct) targetKey = key; }
-        let cell = null;
-        if(targetKey) {
-            const [tx, ty] = targetKey.split(','); 
-            cell = document.getElementById(`cell-${tx}-${ty}`);
-            if(cell) cell.style.background = '#f1c40f';
-        }
-        setTimeout(() => {
-            if(solved) return;
-            if(cell) cell.style.background = '';
-            showAnswerBtn.disabled = false;
-        }, 2000);
-    };
-}
 
 function renderSpellingTiles(q) {
     let visualHtml = q.img ? `<img src="${q.img}" style="width: 100px; height: 100px; object-fit: cover; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">` : `<div class="spelling-word-icon">${q.icon}</div>`;
     
     const html = `
         <h2>Spelling Game</h2>
-        <p>Click the letters to spell the word correctly!</p>
+        <p>Click the letters to spell the word correctly! <span class="transliteration">انقر الحروف لتهجئة الكلمة الصحيحة</span></p>
         <div class="spelling-container">
             ${visualHtml}
             <div class="question-box" style="margin: 0;">${q.trans}</div>
@@ -1012,131 +1052,6 @@ function renderSpellingTiles(q) {
     };
 }
 
-function renderCircleSorting(q) {
-    const html = `
-        <h2>Sorting Wheel 🎡</h2>
-        <p>إملأ الدوائر الفارغة بالكلمات الصحيحة التي تبدأ بالحرف المطلوب!</p>
-        <div class="question-box" style="margin-top: 0;">${q.trans}</div>
-        
-        <div class="sorting-wheel-container" id="sw-container">
-            <div class="sorting-wheel-center">${q.centerText}</div>
-            <div id="sw-nodes"></div>
-        </div>
-        
-        <div class="sorting-tokens-bank" id="sw-bank"></div>
-        <button class="btn check-btn" id="sw-check" style="margin-top: 20px;">Check Answer ✔️</button>
-    `;
-    dynamicContent.innerHTML = html;
-    
-    const nodesContainer = document.getElementById('sw-nodes');
-    const bankContainer = document.getElementById('sw-bank');
-    
-    const slotsCount = q.correct.length;
-    const angleStep = 360 / slotsCount;
-    
-    // Generate empty slots in a circle
-    for(let i=0; i<slotsCount; i++) {
-        let angle = i * angleStep;
-        let node = document.createElement('div');
-        node.className = 'sorting-node';
-        node.style.transform = `rotate(${angle}deg)`;
-        
-        let slot = document.createElement('div');
-        slot.className = 'sorting-slot';
-        slot.dataset.id = i;
-        slot.style.transform = `translate(-50%, -50%) translateY(-80px) rotate(-${angle}deg)`;
-        
-        node.appendChild(slot);
-        nodesContainer.appendChild(node);
-    }
-    
-    let allTokens = [...q.correct, ...q.wrong].sort(() => Math.random() - 0.5);
-    
-    allTokens.forEach((word, index) => {
-        let token = document.createElement('div');
-        token.className = 'sorting-token';
-        token.innerText = word;
-        token.dataset.word = word;
-        token.dataset.id = index;
-        
-        token.onclick = () => {
-            if(solved) return;
-            const emptySlot = Array.from(document.querySelectorAll('.sorting-slot')).find(s => !s.classList.contains('filled'));
-            if(emptySlot) {
-                emptySlot.innerText = word;
-                emptySlot.classList.add('filled');
-                emptySlot.dataset.tokenId = index;
-                token.classList.add('hidden');
-            }
-        };
-        bankContainer.appendChild(token);
-    });
-    
-    document.querySelectorAll('.sorting-slot').forEach(slot => {
-        slot.onclick = () => {
-            if(solved) return;
-            if(slot.classList.contains('filled')) {
-                let token = document.querySelector(`.sorting-token[data-id="${slot.dataset.tokenId}"]`);
-                if(token) token.classList.remove('hidden');
-                slot.innerText = '';
-                slot.classList.remove('filled');
-                delete slot.dataset.tokenId;
-            }
-        };
-    });
-    
-    let solved = false;
-    const checkBtn = document.getElementById('sw-check');
-    checkBtn.onclick = () => {
-        if(solved) return;
-        const slots = Array.from(document.querySelectorAll('.sorting-slot'));
-        if(slots.every(s => s.classList.contains('filled'))) {
-            let userWords = slots.map(s => s.innerText);
-            let isAllCorrect = userWords.every(w => q.correct.includes(w));
-            if(isAllCorrect) {
-                solved = true;
-                checkBtn.style.display = 'none';
-                document.querySelector('.sorting-wheel-center').style.background = 'var(--success)';
-                processItemAnswer(true);
-            } else {
-                processItemAnswer(false, document.getElementById('sw-container'));
-                setTimeout(() => {
-                    if(solved) return;
-                    slots.forEach(slot => {
-                        let token = document.querySelector(`.sorting-token[data-id="${slot.dataset.tokenId}"]`);
-                        if(token) token.classList.remove('hidden');
-                        slot.innerText = '';
-                        slot.classList.remove('filled');
-                        delete slot.dataset.tokenId;
-                    });
-                }, 800);
-            }
-        }
-    };
-    
-    hintCurrentScreen = () => {
-        if(solved) return;
-        showAnswerBtn.disabled = true;
-        const slots = document.querySelectorAll('.sorting-slot');
-        let originalText = Array.from(slots).map(s => s.innerText);
-        
-        Array.from(slots).forEach((s, i) => {
-            s.innerText = q.correct[i];
-            s.style.color = '#f1c40f';
-            s.style.borderColor = '#f1c40f';
-        });
-        
-        setTimeout(() => {
-            if(solved) return;
-            Array.from(slots).forEach((s, i) => {
-                s.innerText = originalText[i];
-                s.style.color = 'var(--primary)';
-                if(!s.classList.contains('filled')) s.style.borderColor = '#7f8fa6';
-            });
-            showAnswerBtn.disabled = false;
-        }, 2000);
-    };
-}
 
 function renderWindowWheel(q) {
     let visualHtml = q.img ? `<img src="${q.img}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 10px; margin-bottom: 10px;">` : (q.icon ? `<div style="font-size: 4rem; margin-bottom: 10px;">${q.icon}</div>` : '');
@@ -1178,10 +1093,10 @@ function renderWindowWheel(q) {
         
         let wordEl = document.createElement('div');
         wordEl.className = 'window-word';
-        wordEl.innerText = word;
-        // Keep them upright or let them point to center? Pointing to center is better for a wheel!
-        wordEl.style.transform = `rotate(-${angle}deg)`; // No, let's keep them upright for readability
-        // Wait, if it rotates -angle, it's upright relative to screen.
+        const arLabel = q.allWordsAr && q.allWordsAr[index] ? `<span class="window-word-ar">${q.allWordsAr[index]}</span>` : '';
+        wordEl.innerHTML = word + arLabel;
+        wordEl.style.transform = `rotate(-${angle}deg)`;
+        // Keep words upright for readability
         
         wrapper.appendChild(wordEl);
         bottomLayer.appendChild(wrapper);
@@ -1291,7 +1206,7 @@ function renderDragDrop(q) {
         let wordEl = document.createElement('div');
         wordEl.className = 'drag-word';
         wordEl.draggable = true;
-        wordEl.innerText = item.word;
+        wordEl.innerHTML = item.word + (item.ar ? `<span class="word-ar-label">${item.ar}</span>` : '');
         wordEl.dataset.target = item.target;
         wordEl.id = `dd-word-${index}`;
         
@@ -1434,6 +1349,486 @@ function renderDragDrop(q) {
         }, 2500);
     };
 }
+
+// ==========================================================================
+// New Question Type Renderers (Fill Blanks, Choose & Use, Grammar Find)
+// ==========================================================================
+
+function renderFillBlanks(q) {
+    // Build sentence rows with Arabic translation under each sentence
+    let sentencesHtml = q.sentences.map((s, index) => {
+        let sentenceText = s.text.replace(/_________/g, `<span class="blank-slot" id="fb-slot-${index}" data-correct="${s.correct}" data-index="${index}"></span>`);
+        return `
+            <div class="fb-sentence-row">
+                <span style="margin-right: 10px; color: var(--primary); font-weight: 900;">${index + 1}.</span>
+                <span>${sentenceText}</span>
+                ${s.ar ? `<span class="transliteration" style="width:100%; margin-top:3px; margin-right:20px;">🌐 ${s.ar}</span>` : ''}
+            </div>
+        `;
+    }).join('');
+
+    // Build wordsAr lookup map
+    const wordsArMap = {};
+    (q.words || []).forEach((w, i) => { if (q.wordsAr && q.wordsAr[i]) wordsArMap[w] = q.wordsAr[i]; });
+
+    let shuffledWords = [...q.words].sort(() => Math.random() - 0.5);
+
+    const html = `
+        <h2>${q.title}</h2>
+        <p>${q.trans}</p>
+
+        <div class="fb-container" id="fb-container">
+            <!-- Word Bank -->
+            <div class="drag-words-container" id="fb-bank" style="min-height: 60px; padding: 10px; border: 2px dashed #ccc; border-radius: 10px; width: 100%; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
+                ${shuffledWords.map((w, index) => `
+                    <div class="drag-word" draggable="true" id="fb-word-${index}" data-word="${w}">
+                        ${w}
+                        ${wordsArMap[w] ? `<span class="word-ar-label">${wordsArMap[w]}</span>` : ''}
+                    </div>
+                `).join('')}
+            </div>
+
+            <!-- Sentences -->
+            <div class="fb-sentences">
+                ${sentencesHtml}
+            </div>
+
+            <button class="btn check-btn" id="fb-check" style="margin-top: 10px;">Check Answer ✔️</button>
+        </div>
+    `;
+    dynamicContent.innerHTML = html;
+
+    const bankContainer = document.getElementById('fb-bank');
+    const checkBtn = document.getElementById('fb-check');
+    let solved = false;
+    let selectedWordEl = null;
+
+    // Add interactivity to words in the bank
+    const words = document.querySelectorAll('#fb-bank .drag-word');
+    words.forEach(wordEl => {
+        // Drag events
+        wordEl.addEventListener('dragstart', (e) => {
+            if (solved) return;
+            wordEl.classList.add('dragging');
+            e.dataTransfer.setData('text/plain', wordEl.id);
+        });
+
+        wordEl.addEventListener('dragend', () => {
+            wordEl.classList.remove('dragging');
+        });
+
+        // Click fallback for touch screens
+        wordEl.addEventListener('click', (e) => {
+            if (solved) return;
+            e.stopPropagation();
+            if (selectedWordEl) {
+                selectedWordEl.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';
+            }
+            if (selectedWordEl === wordEl) {
+                selectedWordEl = null;
+            } else {
+                selectedWordEl = wordEl;
+                wordEl.style.boxShadow = '0 0 10px 5px var(--primary)';
+            }
+        });
+    });
+
+    // Slots click and drag handlers
+    const slots = document.querySelectorAll('.blank-slot');
+    slots.forEach(slot => {
+        // Drag over and drop
+        slot.addEventListener('dragover', (e) => {
+            if (solved) return;
+            e.preventDefault();
+            slot.style.background = '#cbd5e0';
+        });
+
+        slot.addEventListener('dragleave', () => {
+            if (solved) return;
+            slot.style.background = '#edf2f7';
+        });
+
+        slot.addEventListener('drop', (e) => {
+            if (solved) return;
+            e.preventDefault();
+            slot.style.background = '#edf2f7';
+            const wordId = e.dataTransfer.getData('text/plain');
+            const wordEl = document.getElementById(wordId);
+            if (wordEl) {
+                placeWordInSlot(wordEl, slot);
+            }
+        });
+
+        // Click handler
+        slot.addEventListener('click', () => {
+            if (solved) return;
+            if (slot.classList.contains('filled')) {
+                // Return word to bank
+                const wordVal = slot.innerText;
+                slot.innerText = '';
+                slot.classList.remove('filled');
+                slot.classList.remove('correct-slot', 'error-slot');
+                
+                // Unhide the word in the bank
+                const wordEl = Array.from(words).find(el => el.dataset.word === wordVal && el.style.display === 'none');
+                if (wordEl) {
+                    wordEl.style.display = 'block';
+                }
+            } else if (selectedWordEl) {
+                // Place selected word in slot
+                placeWordInSlot(selectedWordEl, slot);
+                selectedWordEl.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';
+                selectedWordEl = null;
+            }
+        });
+    });
+
+    function placeWordInSlot(wordEl, slot) {
+        // If slot is already filled, return previous word to bank
+        if (slot.classList.contains('filled')) {
+            const oldWordVal = slot.innerText;
+            const oldWordEl = Array.from(words).find(el => el.dataset.word === oldWordVal && el.style.display === 'none');
+            if (oldWordEl) oldWordEl.style.display = 'block';
+        }
+
+        const wordVal = wordEl.dataset.word;
+        slot.innerText = wordVal;
+        slot.classList.add('filled');
+        slot.classList.remove('correct-slot', 'error-slot');
+        wordEl.style.display = 'none';
+    }
+
+    // Clicking container resets selection
+    document.getElementById('fb-container').addEventListener('click', () => {
+        if (selectedWordEl) {
+            selectedWordEl.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';
+            selectedWordEl = null;
+        }
+    });
+
+    // Check answer action
+    checkBtn.addEventListener('click', () => {
+        if (solved) return;
+        let allCorrect = true;
+        let anyEmpty = false;
+
+        slots.forEach(slot => {
+            const wordVal = slot.innerText.trim();
+            const correctVal = slot.dataset.correct;
+
+            if (!slot.classList.contains('filled') || wordVal === '') {
+                anyEmpty = true;
+                allCorrect = false;
+                slot.classList.add('error-slot');
+                setTimeout(() => slot.classList.remove('error-slot'), 500);
+            } else if (wordVal !== correctVal) {
+                allCorrect = false;
+                slot.classList.add('error-slot');
+                // Revert wrong word after 1 sec
+                setTimeout(() => {
+                    if (solved) return;
+                    slot.innerText = '';
+                    slot.classList.remove('filled', 'error-slot');
+                    const hiddenWordEl = Array.from(words).find(el => el.dataset.word === wordVal && el.style.display === 'none');
+                    if (hiddenWordEl) hiddenWordEl.style.display = 'block';
+                }, 1000);
+            } else {
+                slot.classList.add('correct-slot');
+            }
+        });
+
+        if (anyEmpty) {
+            processItemAnswer(false, document.getElementById('fb-sentences'));
+            return;
+        }
+
+        if (allCorrect) {
+            solved = true;
+            checkBtn.style.display = 'none';
+            processItemAnswer(true);
+        } else {
+            processItemAnswer(false, document.getElementById('fb-sentences'));
+        }
+    });
+
+    // Show answer logic (hint)
+    hintCurrentScreen = () => {
+        if (solved) return;
+        showAnswerBtn.disabled = true;
+
+        slots.forEach(slot => {
+            slot.innerText = slot.dataset.correct;
+            slot.classList.add('filled', 'correct-slot');
+            slot.style.borderColor = '#f1c40f';
+            slot.style.color = '#f1c40f';
+        });
+
+        setTimeout(() => {
+            if (solved) return;
+            loadNextScreen(true); // reload to clear and let them try/place
+            showAnswerBtn.disabled = false;
+        }, 2000);
+    };
+}
+
+function renderChooseAndUse(q) {
+    let visualHtml = q.img
+        ? `<img src="${q.img}" style="max-height: 150px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">`
+        : (q.icon ? `<div style="font-size: 5rem;">${q.icon}</div>` : '');
+
+    let shuffledChoices = [...q.choices].sort(() => Math.random() - 0.5);
+
+    // Build pronunciation lookup for step-1 choices
+    const choicesPrMap = {};
+    (q.choices || []).forEach((c, i) => {
+        if (q.choicesPr && q.choicesPr[i]) choicesPrMap[c] = q.choicesPr[i];
+    });
+
+    // Split sentence template at the blank placeholder
+    const parts = (q.sentenceTemplate || '').split('_______');
+    const sentBefore = parts[0] || '';
+    const sentAfter  = parts[1] || '';
+
+    const html = `
+        <h2>${q.title}</h2>
+        <p>${q.trans}</p>
+        <div class="cu-container">
+            ${visualHtml}
+            <!-- Step 1: pick correct word -->
+            <div class="cu-step-label">Step 1 — Which word matches the picture? 🖼️
+                <span class="transliteration">اختر الكلمة التي تطابق الصورة</span>
+            </div>
+            <div class="cu-choices" id="cu-choices-container">
+                ${shuffledChoices.map(c => `
+                    <button class="cu-choice-btn" data-choice="${c}">
+                        ${c}
+                        ${choicesPrMap[c] ? `<span class="cu-sent-pr">${choicesPrMap[c]}</span>` : ''}
+                    </button>`).join('')}
+            </div>
+            <!-- Step 2: complete the sentence -->
+            <div class="cu-sentence-section" id="cu-sentence-section">
+                <div class="cu-step-label">Step 2 — Complete the sentence! ✍️
+                    <span class="transliteration">أكمل الجملة الناقصة</span>
+                </div>
+                <div class="cu-sentence-display">
+                    ${sentBefore}<span class="cu-sent-blank" id="cu-sent-blank">_______</span>${sentAfter}
+                </div>
+                ${q.sentenceTranslit ? `<div class="transliteration" style="text-align:center; margin-top:-6px; margin-bottom:10px;">${q.sentenceTranslit}</div>` : ''}
+                <div class="cu-sent-choices">
+                    ${(q.sentenceChoices || []).map((c, i) => `
+                        <button class="cu-sent-choice-btn" data-choice="${c}">
+                            ${c}
+                            ${q.sentenceChoicesPr && q.sentenceChoicesPr[i] ? `<span class="cu-sent-pr">${q.sentenceChoicesPr[i]}</span>` : ''}
+                        </button>`).join('')}
+                </div>
+            </div>
+        </div>
+    `;
+    dynamicContent.innerHTML = html;
+
+    const sentenceSection = document.getElementById('cu-sentence-section');
+    const blank = document.getElementById('cu-sent-blank');
+    let solved = false;
+    let isChoiceCorrect = false;
+
+    // ── Step 1 handlers ──
+    const choiceButtons = document.querySelectorAll('.cu-choice-btn');
+    choiceButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            if (isChoiceCorrect) return;
+            if (btn.dataset.choice === q.correctChoice) {
+                isChoiceCorrect = true;
+                playSound('success');
+                choiceButtons.forEach(b => {
+                    b.disabled = true;
+                    if (b.dataset.choice === q.correctChoice) b.classList.add('correct');
+                });
+                sentenceSection.classList.add('active');
+            } else {
+                playSound('error');
+                addError();
+                btn.classList.add('wrong');
+                setTimeout(() => btn.classList.remove('wrong'), 500);
+            }
+        });
+    });
+
+    // ── Step 2 handlers ──
+    const sentChoiceBtns = document.querySelectorAll('.cu-sent-choice-btn');
+    sentChoiceBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            if (solved || !isChoiceCorrect) return;
+            if (btn.dataset.choice === q.sentenceAnswer) {
+                solved = true;
+                btn.classList.add('correct');
+                blank.textContent = btn.dataset.choice;
+                blank.style.color = 'var(--success)';
+                blank.style.borderColor = 'var(--success)';
+                sentChoiceBtns.forEach(b => b.disabled = true);
+                processItemAnswer(true);
+            } else {
+                playSound('error');
+                addError();
+                btn.classList.add('wrong');
+                setTimeout(() => btn.classList.remove('wrong'), 500);
+            }
+        });
+    });
+
+    // ── Hint ──
+    hintCurrentScreen = () => {
+        if (solved) return;
+        showAnswerBtn.disabled = true;
+        choiceButtons.forEach(b => {
+            b.disabled = true;
+            if (b.dataset.choice === q.correctChoice) {
+                b.style.background = '#f1c40f'; b.style.borderColor = '#f1c40f'; b.style.color = '#fff';
+            }
+        });
+        sentenceSection.classList.add('active');
+        if (blank) { blank.textContent = q.sentenceAnswer; blank.style.color = '#f1c40f'; blank.style.borderColor = '#f1c40f'; }
+        sentChoiceBtns.forEach(b => {
+            b.disabled = true;
+            if (b.dataset.choice === q.sentenceAnswer) { b.style.background = '#f1c40f'; b.style.borderColor = '#f1c40f'; b.style.color = '#fff'; }
+        });
+        setTimeout(() => { if (solved) return; loadNextScreen(true); showAnswerBtn.disabled = false; }, 2500);
+    };
+}
+
+function renderGrammarFind(q) {
+    // Build passage dynamically from readingScreens (with pronunciation for each sentence)
+    const passageHtml = readingScreens.map(rs => {
+        const sentItems = rs.sentences.map(s => `
+            <div class="gf-sent-item" onclick="toggleTTS('${s.en.replace(/'/g,"\\'")}', this)">
+                <span class="gf-sent-en">${s.en}</span>
+                ${s.ar ? `<span class="gf-sent-ar">🌐 ${s.ar}</span>` : ''}
+                <span class="transliteration" style="color:#e1b12c; margin-top:2px;">${s.pr}</span>
+            </div>
+        `).join('');
+        return `<div style="margin-bottom:10px;"><strong style="color:var(--primary);">${rs.title}</strong>${sentItems}</div>`;
+    }).join('');
+
+    let rowsHtml = q.prompts.map((p, index) => `
+        <div class="gf-row" id="gf-row-${index}">
+            <div class="gf-label">${p.label}</div>
+            <div class="gf-input-wrapper">
+                <input type="text" class="gf-input" id="gf-input-${index}" placeholder="Type word from text..." data-key="${p.key}" autocomplete="off">
+            </div>
+        </div>
+    `).join('');
+
+    const html = `
+        <h2>${q.title}</h2>
+        <p>${q.trans}</p>
+
+        <div class="gf-passage-box">
+            <div class="gf-passage-header">📖 Read the passages carefully — find your answers here!</div>
+            <div class="gf-passage-text">${passageHtml}</div>
+        </div>
+
+        <div class="gf-container">
+            <div class="gf-card">
+                ${rowsHtml}
+            </div>
+            <button class="btn check-btn" id="gf-check" style="margin-top: 10px;">Check Answers ✔️</button>
+        </div>
+    `;
+    dynamicContent.innerHTML = html;
+
+    const checkBtn = document.getElementById('gf-check');
+    let solved = false;
+
+    // Handle pressing Enter to go to next inputs
+    const inputs = document.querySelectorAll('.gf-input');
+    inputs.forEach((input, index) => {
+        input.addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') {
+                if (index < inputs.length - 1) {
+                    inputs[index + 1].focus();
+                } else {
+                    checkBtn.click();
+                }
+            }
+        });
+    });
+
+    setTimeout(() => {
+        if (inputs[0]) inputs[0].focus();
+    }, 100);
+
+    // Check action
+    checkBtn.addEventListener('click', () => {
+        if (solved) return;
+        let allCorrect = true;
+        let anyEmpty = false;
+
+        q.prompts.forEach((p, index) => {
+            const inputEl = document.getElementById(`gf-input-${index}`);
+            const val = inputEl.value.trim().toLowerCase();
+
+            if (val === '') {
+                anyEmpty = true;
+                allCorrect = false;
+                inputEl.classList.add('error');
+                setTimeout(() => inputEl.classList.remove('error'), 500);
+            } else {
+                // Match against allowed correct answers array
+                const isMatch = p.answers.some(ans => ans.toLowerCase() === val);
+                if (isMatch) {
+                    inputEl.classList.remove('error');
+                    inputEl.classList.add('correct');
+                } else {
+                    allCorrect = false;
+                    inputEl.classList.add('error');
+                    setTimeout(() => inputEl.classList.remove('error'), 500);
+                }
+            }
+        });
+
+        if (anyEmpty) {
+            processItemAnswer(false, document.querySelector('.gf-card'));
+            return;
+        }
+
+        if (allCorrect) {
+            solved = true;
+            checkBtn.style.display = 'none';
+            processItemAnswer(true);
+        } else {
+            processItemAnswer(false, document.querySelector('.gf-card'));
+        }
+    });
+
+    // Show answer logic
+    hintCurrentScreen = () => {
+        if (solved) return;
+        showAnswerBtn.disabled = true;
+
+        q.prompts.forEach((p, index) => {
+            const inputEl = document.getElementById(`gf-input-${index}`);
+            // Provide the first correct answer in the array as a sample
+            inputEl.value = p.answers[0];
+            inputEl.style.borderColor = '#f1c40f';
+            inputEl.style.backgroundColor = '#fffbeb';
+            inputEl.disabled = true;
+        });
+        checkBtn.disabled = true;
+
+        setTimeout(() => {
+            if (solved) return;
+            loadNextScreen(true); // Reverts/disappears after 2 seconds
+            showAnswerBtn.disabled = false;
+        }, 2000);
+    };
+}
+
+backBtn.addEventListener('click', () => {
+    if (currentScreenIndex <= 0) return;
+    if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+    hintCurrentScreen = null;
+    currentScreenIndex--;
+    loadNextScreen(true);
+});
 
 showAnswerBtn.addEventListener('click', () => { if (hintCurrentScreen) hintCurrentScreen(); });
 skipBtn.addEventListener('click', () => {

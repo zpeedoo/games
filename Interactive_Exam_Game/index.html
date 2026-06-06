@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لعبة الامتحان التفاعلي - 50 سؤالاً</title>
+    <title>لعبة الامتحان التفاعلي - 75 سؤالاً</title>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -20,7 +20,7 @@
             <h1 class="game-title">✨ بطل الإنجليزية ✨</h1>
             <div class="timer-board">
                 <span class="clock-icon">⏰</span>
-                <span id="timer">30:00</span>
+                <span id="timer">75:00</span>
             </div>
         </header>
 
@@ -35,6 +35,7 @@
             
             <!-- أزرار المساعدة (مخفية في شاشة البداية) -->
             <div class="helper-controls hidden" id="helper-controls">
+                <button class="helper-btn" id="back-btn" disabled>⬅️ Back</button>
                 <button class="helper-btn" id="show-answer-btn">💡 Show Answer</button>
                 <button class="helper-btn" id="skip-btn">⏭️ Skip</button>
             </div>
@@ -42,7 +43,7 @@
             <!-- شاشة البداية -->
             <section class="screen active" id="screen-start">
                 <h2>Welcome to the English Hero Challenge!</h2>
-                <p>You have 30 minutes to collect 51 stars. Are you ready?</p>
+                <p>You have 75 minutes to collect 75 stars. Are you ready?</p>
                 <button class="btn primary-btn" id="start-btn">Start Playing 🚀</button>
             </section>
 
@@ -63,7 +64,7 @@
                 <h2 id="end-title">Great Job Hero! 🎉</h2>
                 <p>You have finished the challenge. Here is your final score:</p>
                 <div class="final-score">
-                    <span id="final-score-val">0</span> / 51
+                    <span id="final-score-val">0</span> / 75
                 </div>
                 <button class="btn primary-btn" id="restart-btn">Play Again 🔄</button>
             </section>
